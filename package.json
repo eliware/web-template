@@ -1,0 +1,77 @@
+{
+  "name": "@eliware/web-template",
+  "type": "module",
+  "version": "1.1.0",
+  "description": "A Node.js web application template with explicit assets, routes, build, and deployment boundaries.",
+  "main": "web-template.mjs",
+  "scripts": {
+    "start": "node web-template.mjs",
+    "test": "npx --node-options=\"--experimental-vm-modules --no-warnings\" jest --detectOpenHandles --silent --coverage",
+    "test:gaps": "npm test 2>&1 | grep '|' | grep -vF '|     100 |      100 |     100 |     100 |'",
+    "lint": "npx oxlint .",
+    "pack": "npm pack --dry-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliware/web-template.git"
+  },
+  "keywords": [
+    "web-template",
+    "web",
+    "nodejs",
+    "starter",
+    "template"
+  ],
+  "author": "Eli Sterling, eliware.org <eli@eliware.org>",
+  "license": "MIT",
+  "eliware": {
+    "apply": [
+      "general",
+      "application",
+      "web"
+    ],
+    "authority": {
+      "authoritativeFor": [
+        "Web application template structure and starter workflow."
+      ],
+      "notAuthoritativeFor": [
+        "Shared Eliware policy, operations, and publication authorization."
+      ]
+    },
+    "crosslinks": [
+      {
+        "path": "eliware/conventions",
+        "relationship": "relatedAuthority",
+        "authoritativeFor": "Applicable repository conventions."
+      }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/eliware/web-template/issues"
+  },
+  "homepage": "https://github.com/eliware/web-template#readme",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)",
+      "**/?(*.)+(spec|test).mjs"
+    ]
+  },
+  "dependencies": {
+    "@eliware/common": "^1.1.7",
+    "dotenv": "^17.4.2"
+  },
+  "files": [
+    "web-template.mjs",
+    "public",
+    "examples",
+    "src",
+    "web-template.service",
+    ".env.example",
+    "README.md",
+    "LICENSE"
+  ]
+}
