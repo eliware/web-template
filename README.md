@@ -102,14 +102,14 @@ For help or discussion, join the Eliware community:
 
 ## License
 
-See [LICENSE](LICENSE).
+[license](LICENSE)
 
 ## Links
 
 - Documentation: [docs](docs/README.md) · [specifications](specs/README.md)
 - [Canonical repository profile specifications](https://github.com/eliware/test/blob/main/specs/conventions/README.md)
 - [Home Page](https://eliware.org)
-- [GitHub Repo](https://github.com/eliware/web-template) (`https://github.com/eliware/web-template`)
+- [GitHub Repo](https://github.com/eliware/web-template) (`git+https://github.com/eliware/web-template.git`)
 - [GitHub Org](https://github.com/eliware)
 - [Eli Sterling on GitHub](https://github.com/eli-sterling)
 - [Discord](https://discord.gg/M6aTR9eTwN)
