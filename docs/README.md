@@ -1,15 +1,9 @@
 # Documentation
 
-This directory contains end-user documentation for projects derived from
-`@eliware/web-template`. The root [README](../README.md) is the primary
-starter guide.
+[Project README](../README.md) · [Specifications](../specs/README.md) · [Release notes](../RELEASE_NOTES.md)
 
-## Contents
+Purpose: explain the public use and support boundaries of the Eliware web template. Scope: user-facing instructions for setting up, building, and running the starter web application. Setup: follow the [project README](../README.md). Usage: see its Usage, Routes, and Development server sections. Validation: run `npm test` in a checkout. Support: use the community link in the project README.
 
-- [Root README](../README.md)
-- [Examples](../examples/README.md)
+- [Project README](../README.md)
+- [Specifications](../specs/README.md)
 - [Release notes](../RELEASE_NOTES.md)
-
-## Validation
-
-Keep links current and add each new end-user document to this index.

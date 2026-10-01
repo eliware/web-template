@@ -2,36 +2,44 @@
 
 ## Project
 
-`@eliware/web-template` is an ESM Node.js web application template using dotenv, `@eliware/common`, Jest, and linting.
+Repository: `eliware/web-template`. Purpose: provide a reusable Node.js web application baseline for Eliware projects.
 
 ## Scope and boundaries
 
-- This template owns the starter web application, routes, assets, tests, metadata, and local deployment guidance.
-- Do not publish, tag, deploy, or change external platform state without explicit authorization.
+Scope: this repository owns the starter web application, browser assets, tests, package metadata, container definition, and local deployment configuration. It does not own shared Eliware requirements, production credentials, or production release and deployment execution. This AGENTS.md applies repository-wide; any nearer AGENTS.md applies within its subdirectory.
 
 ## Layout
 
-- `web-template.mjs` is the thin entrypoint; `public/` is the public asset root and `.env.example` documents configuration.
-- `examples/`, `src/`, and `tests/` contain starter material for derived projects.
+Required structure: `web-template.mjs` is the executable entrypoint. `src/` contains server and browser implementation and `tests/` mirrors it. `public/` is the public asset root; `dist/` contains generated browser output. `docs/` contains end-user documentation; `specs/` contains repository-specific directives. `Dockerfile` defines the GHCR image and `.knit/deploy.yaml` defines development deployment commands.
 
 ## Development
 
-- Use Node.js 26 and native ESM.
-- Read README.md, applicable specs, and the shared Docs, Conventions, and Operations authorities before changing files.
-- Keep routes, assets, ports, browser validation, build output, and deployment boundaries documented.
-- Keep `.env.example` current and never commit `.env` or credentials.
-- Preserve the documented clone, rename, install, start, test, and customization workflow.
-- Keep application startup and shutdown examples safe and explicit.
-- Keep runtime configuration and lifecycle behavior documented in README.md.
+These development instructions apply repository-wide; nearer AGENTS.md files provide instructions within each subdirectory.
+
+Use Node.js 26, npm, and native ESM `.mjs` modules. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have a single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module does only its own responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to the existing module. During ordinary review, refactor them when you find mixed responsibilities. Passing the 100-line source and 200-line test maxima does not prove a module is cohesive or permit mixed responsibilities. The maxima are blocking; passing them does not prove a module has one responsibility.
+
+Keep each `.mjs` under `src/` mirrored by exactly one `.test.mjs` under `tests/`; do not add unmatched test files. Keep route, browser, and lifecycle tests at the lowest module level that proves their behavior.
 
 ## Validation
 
-Run `npm test`, `npm run test:gaps`, `npm run lint`, `npm run typecheck`, and `npm run pack` after template changes. Do not start services unintentionally.
+Use Node.js 26 with npm and the native ESM module system. Runtime environment settings are `PORT` and `LOG_LEVEL`, loaded from `.env` when present; package.json and `.knit/deploy.yaml` are metadata, not runtime configuration. Node-specific validation runs through `eliware-test` using `npm test`. Run `npm ci` after dependency changes and `npm test` before handoff. Aggregate validation runs Jest with 100% statement, branch, function, and line coverage, lint, format-check, audit, build, and applicable profile checks through `eliware-test`. Use `npm run lint`, `npm run format`, `npm run format:check`, or `npm run audit` for targeted stages. CI runs `npm ci` followed by `npm test`.
 
 ## Security
 
-Never commit `.env`, tokens, passwords, private keys, or credential-bearing URLs.
+Keep `.env`, credentials, tokens, private keys, and machine-specific values out of version control and container images. Do not log secrets or sensitive payloads.
 
 ## Changes
 
-Update README, environment examples, package metadata, routes/assets, and template files together. Do not bump versions, tag, publish, or deploy unless explicitly requested.
+Keep changes actionable, current, and concise. A documented project-specific deviation does not waive any convention ID or validation stage. Project-specific requirements may add to shared requirements but must not weaken them. Do not publish, release, deploy, or modify external systems without explicit authorization through the applicable Operations handoff.
+
+## Application
+
+The executable entrypoint is `web-template.mjs`; implementation is under `src/`. Startup loads `.env`, validates `PORT` before listening, configures logging and process handlers, and registers repeatable server shutdown. Runtime configuration uses `PORT` and `LOG_LEVEL`. `PORT` defaults to 3000 and must be an integer from 1 through 65535. The application serves its page and compiled browser client only; it does not connect to external services. Its lifecycle is local HTTP serving followed by signal-triggered shutdown, within these safe operational boundaries.
+
+## Web
+
+The Node.js server listens on `PORT` (default 3000). `public/` is the only public source-asset directory; `dist/` is generated by `npm run build` and is not a public source directory. Routes are `GET /` for the page and `GET /client.js` for the compiled browser entrypoint; other paths return 404 and other methods return 405. `npm run puppeteer` installs Chrome for Puppeteer. Start the server before running `npm run lighthouse`; browser checks write generated output under ignored `artifacts/`. The build output is `dist/client.js`. The Docker image serves the app and publication does not deploy it.
+
+## GHCR publication
+
+Image visibility is public after publication. The image is named `ghcr.io/eliware/web-template` and built from the repository-root `Dockerfile` and build context for `linux/amd64`. `.github/workflows/publish.yml` validates with `npm ci` and `npm test`, checks the exact `vMAJOR.MINOR.PATCH` tag against `package.json.version`, publishes the image, creates a signed GitHub artifact attestation for provenance, verifies the tag resolves to the pushed digest, inspects the digest, verifies the attestation, and records release handoff evidence. Workflow credentials use GitHub's token; no static registry credential is stored. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.

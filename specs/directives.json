@@ -1,12 +1,14 @@
 {
-  "version": "8.0",
-  "repositoryId": "eliware/web-template",
-  "description": "Repository-specific directive index; shared rules remain authoritative in eliware/conventions.",
+  "version": "9.0",
+  "description": "Repository-specific guidance for the Eliware web template.",
   "directives": [
     {
-      "id": "E-1",
-      "source": "eliware/conventions",
-      "profiles": ["general", "application", "web"]
+      "id": "E-1020",
+      "dos": [
+        "Provide a reusable Node.js web application with a public asset root, documented routes, a tested browser build, mirrored tests, and a GHCR image baseline.",
+        "Replace the template identity, page, routes, and package metadata when creating a derived web application."
+      ],
+      "donts": ["Do not publish the template identity or placeholder page as a finished product."]
     }
   ]
 }

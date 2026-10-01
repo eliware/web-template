@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import 'dotenv/config';
-import { log, registerHandlers, registerSignals } from '@eliware/common';
-registerHandlers({ log });
-registerSignals({ log });
-log.info('web-template Started');
+import { runtimeDependencies, startWebApplication } from "./src/main.mjs";
+
+startWebApplication(runtimeDependencies);
