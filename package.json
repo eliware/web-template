@@ -33,6 +33,7 @@
     "node": "26"
   },
   "eliware": {
+    "id": "E-1020",
     "apply": [
       "general",
       "application",
