@@ -1,7 +1,7 @@
 {
   "name": "@eliware/web-template",
   "type": "module",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "A Node.js web application template with explicit assets, routes, build, and deployment boundaries.",
   "main": "web-template.mjs",
   "scripts": {
@@ -10,13 +10,14 @@
     "audit": "eliware-test --audit",
     "format": "eliware-test --format",
     "format:check": "eliware-test --format-check",
-    "build": "webpack --entry ./src/client-entry.mjs --output-path ./dist --output-filename client.js --mode production && webpack-cli --version",
+    "build": "webpack --entry ./src/client-entry.mjs --output-path ./dist --output-filename client.js --mode production",
+    "prebuild": "webpack-cli --version",
     "lighthouse": "lighthouse http://127.0.0.1:3000 --only-categories=accessibility --output=json --output-path=artifacts/lighthouse.json --chrome-flags=--headless",
     "puppeteer": "puppeteer browsers install chrome"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/eliware/web-template"
+    "url": "git+https://github.com/eliware/web-template.git"
   },
   "keywords": [
     "web-template",
@@ -25,7 +26,7 @@
     "starter",
     "template"
   ],
-  "author": "Eli Sterling, eliware.org <eli@eliware.org>",
+  "author": "Eliware <eliware@eliware.org>",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -44,7 +45,7 @@
   },
   "homepage": "https://github.com/eliware/web-template#readme",
   "devDependencies": {
-    "@eliware/test": "^8.0.0",
+    "@eliware/test": "^10.0.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^7.2.3"
   },
@@ -62,10 +63,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 100,
         "branches": 100,
         "functions": 100,
-        "lines": 100
+        "lines": 100,
+        "statements": 100
       }
     }
   },

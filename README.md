@@ -1,6 +1,6 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/web-template [![license](https://img.shields.io/github/license/eliware/web-template.svg)](LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yml)
+## @eliware/web-template [![License](https://img.shields.io/github/license/eliware/web-template)](https://github.com/eliware/web-template/blob/main/LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yml)
 
 ## Table of Contents
 
@@ -25,9 +25,11 @@
 
 ## Features
 
-Purpose: provide a reusable Node.js web application baseline for Eliware projects.
+This template owns a reusable web application baseline; each derived application owns its interface, routes, runtime behavior, and deployment decisions.
 
-Package description: A Node.js web application template with explicit assets, routes, build, and deployment boundaries. Author: Eli Sterling, eliware.org <eli@eliware.org>. License: MIT.
+Package description: A Node.js web application template with explicit assets, routes, build, and deployment boundaries. Author: Eliware <eliware@eliware.org>. License: MIT.
+
+Purpose: provide a reusable Node.js web application baseline for Eliware projects.
 
 The starter serves a simple page and compiled browser entrypoint. Replace the template identity, user interface, and routes when creating a derived application.
 
@@ -46,6 +48,8 @@ Run `node web-template.mjs` to serve the page at `http://localhost:3000`. The po
 ## Development
 
 Read [AGENTS.md](AGENTS.md), this README, [specs/README.md](specs/README.md), and [RELEASE_NOTES.md](RELEASE_NOTES.md) before changing the template. `src/main.mjs` owns application startup, `src/http.mjs` owns HTTP routing, `src/client.mjs` owns page updates, and `src/client-entry.mjs` bootstraps the browser code; each source module has one mirrored test.
+
+Documentation: [docs](docs/README.md) · [specifications](specs/README.md)
 
 ## Testing
 
@@ -86,7 +90,7 @@ Build with `npm run build`, then run `node web-template.mjs`. Ports: the default
 
 ## Build
 
-`npm run build` uses the direct webpack dependency to bundle `src/client-entry.mjs` into `dist/client.js`. Aggregate `npm test` runs this build. `dist/` is generated output and is excluded from source control and public assets.
+`npm run build` first verifies the webpack CLI is available, then uses webpack to bundle `src/client-entry.mjs` into `dist/client.js`. Aggregate `npm test` runs this build. `dist/` is generated output and is excluded from source control and public assets.
 
 ## Deployment
 
@@ -106,11 +110,12 @@ For help or discussion, join the Eliware community:
 
 ## Links
 
-- Documentation: [docs](docs/README.md) · [specifications](specs/README.md)
-- [Canonical repository profile specifications](https://github.com/eliware/test/blob/main/specs/conventions/README.md)
-- [Home Page](https://eliware.org)
-- [GitHub Repo](https://github.com/eliware/web-template) (`git+https://github.com/eliware/web-template.git`)
-- [GitHub Org](https://github.com/eliware)
-- [Eli Sterling on GitHub](https://github.com/eli-sterling)
+- [docs](docs/README.md)
+- [Home Page](https://github.com/eliware/web-template#readme)
+- [GitHub repository](https://github.com/eliware/web-template.git)
+- [Eliware](https://eliware.org)
+- [GitHub organization](https://github.com/eliware)
 - [Discord](https://discord.gg/M6aTR9eTwN)
+- [Documentation](https://github.com/eliware/docs/blob/main/repo-map.yaml)
+- [specifications](specs/README.md)
 - [Release Notes](RELEASE_NOTES.md)
