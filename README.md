@@ -1,6 +1,6 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-## @eliware/web-template [![License](https://img.shields.io/github/license/eliware/web-template)](https://github.com/eliware/web-template/blob/main/LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yml)
+## @eliware/web-template [![License](https://img.shields.io/github/license/eliware/web-template)](https://github.com/eliware/web-template/blob/main/LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yaml)
 
 ## Table of Contents
 
@@ -43,7 +43,12 @@ Clone or create a repository from this template, then run `npm ci`. Copy `.env.e
 
 ## Usage
 
-Run `node web-template.mjs` to serve the page at `http://localhost:3000`. The port can be changed with `PORT`. `package.json.version` identifies releases, which use matching `vMAJOR.MINOR.PATCH` Git tags. Do not treat the GHCR image name as proof that an unreleased image is available.
+Run `node bin/web-template.mjs` to serve the page at `http://localhost:3000`. The port can be changed with `PORT`. `package.json.version` identifies releases, which use matching `vMAJOR.MINOR.PATCH` Git tags. Do not treat the GHCR image name as proof that an unreleased image is available.
+
+Image: ghcr.io/eliware/web-template
+Pull command: docker pull ghcr.io/eliware/web-template:v11.0.0
+Supported tags: vMAJOR.MINOR.PATCH
+Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.
 
 ## Development
 
@@ -69,7 +74,7 @@ The starter serves only its static page and compiled browser client. Keep `.env`
 
 ## Operations
 
-Run `npm run build`, then `node web-template.mjs`; the server listens on the configured port. Shutdown: send a process signal to close the server. Its externally observable workflow is serving the page and browser client routes described below. These are the application's operational boundaries: it opens no outbound connections and makes no persistent changes. To run browser validation, first execute `npm run puppeteer`, start the app, then run `npm run lighthouse`; output is written to ignored `artifacts/`. Build the container from the repository root with `docker build -t web-template .`. After GHCR publication, pull an exact version with `docker pull ghcr.io/eliware/web-template:<release-tag>`, where the tag is `vMAJOR.MINOR.PATCH`. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.
+Run `npm run build`, then `node bin/web-template.mjs`; the server listens on the configured port. Shutdown: send a process signal to close the server. Its externally observable workflow is serving the page and browser client routes described below. These are the application's operational boundaries: it opens no outbound connections and makes no persistent changes. To run browser validation, first execute `npm run puppeteer`, start the app, then run `npm run lighthouse`; output is written to ignored `artifacts/`. Build the container from the repository root with `docker build -t web-template .`. After GHCR publication, pull an exact version with `docker pull ghcr.io/eliware/web-template:<release-tag>`, where the tag is `vMAJOR.MINOR.PATCH`. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.
 
 ## Routes
 
@@ -86,7 +91,7 @@ Run `npm run build`, then `node web-template.mjs`; the server listens on the con
 
 ## Development server
 
-Build with `npm run build`, then run `node web-template.mjs`. Ports: the default port is 3000; set `PORT` to an integer from 1 through 65535 to choose another port. Install Chrome for Puppeteer with `npm run puppeteer`, then run `npm run lighthouse` while the server is available at `http://127.0.0.1:3000`. Lighthouse output goes to ignored `artifacts/lighthouse.json`. These browser checks are not part of automated Jest or CI validation.
+Build with `npm run build`, then run `node bin/web-template.mjs`. Ports: the default port is 3000; set `PORT` to an integer from 1 through 65535 to choose another port. Install Chrome for Puppeteer with `npm run puppeteer`, then run `npm run lighthouse` while the server is available at `http://127.0.0.1:3000`. Lighthouse output goes to ignored `artifacts/lighthouse.json`. These browser checks are not part of automated Jest or CI validation.
 
 ## Build
 

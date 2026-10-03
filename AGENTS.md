@@ -10,9 +10,11 @@ Scope: this repository owns the starter web application, browser assets, tests, 
 
 ## Layout
 
-Required structure: `web-template.mjs` is the executable entrypoint. `src/` contains server and browser implementation and `tests/` mirrors it. `public/` is the public asset root; `dist/` contains generated browser output. `docs/` contains end-user documentation; `specs/` contains repository-specific directives. `Dockerfile` defines the GHCR image and `.knit/deploy.yaml` defines development deployment commands.
+Required structure: `bin/web-template.mjs` is the executable entrypoint. `src/` contains server and browser implementation and `tests/` mirrors it. `public/` is the public asset root; `dist/` contains generated browser output. `docs/` contains end-user documentation; `specs/` contains repository-specific directives. `Dockerfile` defines the GHCR image and `.knit/deploy.yaml` defines development deployment commands.
 
 ## Development
+
+Before changing files, read the root README.md, applicable AGENTS.md instructions, applicable documentation, and applicable specifications.
 
 These development instructions apply repository-wide; nearer AGENTS.md files provide instructions within each subdirectory.
 
@@ -34,7 +36,7 @@ Keep changes actionable, current, and concise. A documented project-specific dev
 
 ## Application
 
-The executable entrypoint is `web-template.mjs`; implementation is under `src/`. Startup loads `.env`, validates `PORT` before listening, configures logging and process handlers, and registers repeatable server shutdown. Runtime configuration uses `PORT` and `LOG_LEVEL`. `PORT` defaults to 3000 and must be an integer from 1 through 65535. The application serves its page and compiled browser client only; it does not connect to external services. Its lifecycle is local HTTP serving followed by signal-triggered shutdown, within these safe operational boundaries.
+The executable entrypoint is `bin/web-template.mjs`; implementation is under `src/`. Startup loads `.env`, validates `PORT` before listening, configures logging and process handlers, and registers repeatable server shutdown. Runtime configuration uses `PORT` and `LOG_LEVEL`. `PORT` defaults to 3000 and must be an integer from 1 through 65535. The application serves its page and compiled browser client only; it does not connect to external services. Its lifecycle is local HTTP serving followed by signal-triggered shutdown, within these safe operational boundaries.
 
 ## Web
 
@@ -42,4 +44,4 @@ The Node.js server listens on `PORT` (default 3000). `public/` is the only publi
 
 ## GHCR publication
 
-Image visibility is public after publication. The image is named `ghcr.io/eliware/web-template` and built from the repository-root `Dockerfile` and build context for `linux/amd64`. `.github/workflows/publish.yml` validates with `npm ci` and `npm test`, checks the exact `vMAJOR.MINOR.PATCH` tag against `package.json.version`, publishes the image, creates a signed GitHub artifact attestation for provenance, verifies the tag resolves to the pushed digest, inspects the digest, verifies the attestation, and records release handoff evidence. Workflow credentials use GitHub's token; no static registry credential is stored. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.
+Image visibility is public after publication. The image is named `ghcr.io/eliware/web-template` and built from the repository-root `Dockerfile` and build context for `linux/amd64`. `.github/workflows/publish.yaml` validates with `npm ci` and `npm test`, checks the exact `vMAJOR.MINOR.PATCH` tag against `package.json.version`, publishes the image, creates a signed GitHub artifact attestation for provenance, verifies the tag resolves to the pushed digest, inspects the digest, verifies the attestation, and records release handoff evidence. Workflow credentials use GitHub's token; no static registry credential is stored. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.

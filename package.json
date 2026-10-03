@@ -1,9 +1,9 @@
 {
   "name": "@eliware/web-template",
   "type": "module",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "A Node.js web application template with explicit assets, routes, build, and deployment boundaries.",
-  "main": "web-template.mjs",
+  "main": "./bin/web-template.mjs",
   "scripts": {
     "test": "eliware-test",
     "lint": "eliware-test --lint",
