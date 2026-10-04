@@ -12,10 +12,10 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
-COPY --chown=node:node web-template.mjs ./web-template.mjs
+COPY --chown=node:node bin/web-template.mjs ./bin/web-template.mjs
 COPY --chown=node:node src ./src
 COPY --chown=node:node public ./public
 COPY --from=build --chown=node:node /app/dist ./dist
 USER node
 EXPOSE 3000
-CMD ["node", "web-template.mjs"]
+CMD ["node", "bin/web-template.mjs"]
