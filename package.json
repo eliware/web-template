@@ -1,8 +1,16 @@
 {
   "name": "@eliware/web-template",
+  "version": "12.0.0",
   "type": "module",
-  "version": "11.0.0",
   "description": "A Node.js web application template with explicit assets, routes, build, and deployment boundaries.",
+  "keywords": [
+    "web-template",
+    "web",
+    "nodejs",
+    "starter",
+    "template"
+  ],
+  "private": true,
   "main": "./bin/web-template.mjs",
   "scripts": {
     "test": "eliware-test",
@@ -15,36 +23,15 @@
     "lighthouse": "lighthouse http://127.0.0.1:3000 --only-categories=accessibility --output=json --output-path=artifacts/lighthouse.json --chrome-flags=--headless",
     "puppeteer": "puppeteer browsers install chrome"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eliware/web-template.git"
-  },
-  "keywords": [
-    "web-template",
-    "web",
-    "nodejs",
-    "starter",
-    "template"
-  ],
-  "author": "Eliware <eliware@eliware.org>",
-  "license": "MIT",
-  "private": true,
   "engines": {
-    "node": "26"
+    "node": ">=26"
   },
-  "eliware": {
-    "id": "E-1020",
-    "apply": [
-      "general",
-      "application",
-      "web",
-      "ghcr-published"
-    ]
+  "dependencies": {
+    "@eliware/common": "^2.0.0",
+    "dotenv": "^18.0.5",
+    "lighthouse": "^13.5.0",
+    "puppeteer": "^25.12.0"
   },
-  "bugs": {
-    "url": "https://github.com/eliware/web-template/issues"
-  },
-  "homepage": "https://github.com/eliware/web-template#readme",
   "devDependencies": {
     "@eliware/test": "^11.0.0",
     "webpack": "^5.99.9",
@@ -71,12 +58,6 @@
       }
     }
   },
-  "dependencies": {
-    "@eliware/common": "^2.0.0",
-    "dotenv": "^18.0.5",
-    "lighthouse": "^13.5.0",
-    "puppeteer": "^25.12.0"
-  },
   "prettier": {
     "printWidth": 100,
     "tabWidth": 2,
@@ -91,5 +72,24 @@
     "arrowParens": "always",
     "proseWrap": "preserve",
     "endOfLine": "lf"
+  },
+  "author": "Eliware <eliware@eliware.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliware/web-template.git"
+  },
+  "homepage": "https://github.com/eliware/web-template#readme",
+  "bugs": {
+    "url": "https://github.com/eliware/web-template/issues"
+  },
+  "eliware": {
+    "id": "E-1020",
+    "apply": [
+      "general",
+      "application",
+      "web",
+      "ghcr-published"
+    ]
   }
 }

@@ -18,13 +18,15 @@ Before changing files, read the root README.md, applicable AGENTS.md instruction
 
 These development instructions apply repository-wide; nearer AGENTS.md files provide instructions within each subdirectory.
 
-Use Node.js 26, npm, and native ESM `.mjs` modules. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have a single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module does only its own responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to the existing module. During ordinary review, refactor them when you find mixed responsibilities. Passing the 100-line source and 200-line test maxima does not prove a module is cohesive or permit mixed responsibilities. The maxima are blocking; passing them does not prove a module has one responsibility.
+Use Node.js 26 or later, npm, and native ESM `.mjs` modules. Read README.md, applicable specifications, implementation, and tests before changing behavior. Every source and test module must have a single responsibility: one cohesive purpose and one reason to change. Business-logic modules and coordinators are valid, including coordinators of coordinators, when each module does only its own responsibility. When a change introduces a distinct responsibility, create a focused submodule with a mirrored test and wire it through its owner; do not add the new responsibility to the existing module. During ordinary review, refactor them when you find mixed responsibilities. Passing the 100-line source and 200-line test maxima does not prove a module is cohesive or permit mixed responsibilities. The maxima are blocking; passing them does not prove a module has one responsibility.
 
 Keep each `.mjs` under `src/` mirrored by exactly one `.test.mjs` under `tests/`; do not add unmatched test files. Keep route, browser, and lifecycle tests at the lowest module level that proves their behavior.
 
 ## Validation
 
-Use Node.js 26 with npm and the native ESM module system. Runtime environment settings are `PORT` and `LOG_LEVEL`, loaded from `.env` when present; package.json and `.knit/deploy.yaml` are metadata, not runtime configuration. Node-specific validation runs through `eliware-test` using `npm test`. Run `npm ci` after dependency changes and `npm test` before handoff. Aggregate validation runs Jest with 100% statement, branch, function, and line coverage, lint, format-check, audit, build, and applicable profile checks through `eliware-test`. Use `npm run lint`, `npm run format`, `npm run format:check`, or `npm run audit` for targeted stages. CI runs `npm ci` followed by `npm test`.
+Use `npm run lint`, `npm run audit`, `npm run format`, and `npm run format:check` as needed.
+
+Use Node.js 26 or later with npm and the native ESM module system. Runtime environment settings are `PORT` and `LOG_LEVEL`, loaded from `.env` when present; package.json and `.knit/deploy.yaml` are metadata, not runtime configuration. Node-specific validation runs through `eliware-test` using `npm test`. Run `npm ci` after dependency changes and `npm test` before handoff. Aggregate validation runs Jest with 100% statement, branch, function, and line coverage, lint, format-check, audit, build, and applicable profile checks through `eliware-test`. Use `npm run lint`, `npm run format`, `npm run format:check`, or `npm run audit` for targeted stages. CI runs `npm ci` followed by `npm test`.
 
 ## Security
 
@@ -45,3 +47,8 @@ The Node.js server listens on `PORT` (default 3000). `public/` is the only publi
 ## GHCR publication
 
 Image visibility is public after publication. The image is named `ghcr.io/eliware/web-template` and built from the repository-root `Dockerfile` and build context for `linux/amd64`. `.github/workflows/publish.yaml` validates with `npm ci` and `npm test`, checks the exact `vMAJOR.MINOR.PATCH` tag against `package.json.version`, publishes the image, creates a signed GitHub artifact attestation for provenance, verifies the tag resolves to the pushed digest, inspects the digest, verifies the attestation, and records release handoff evidence. Workflow credentials use GitHub's token; no static registry credential is stored. Publication does not deploy the image; deployment requires a separate authorized GitOps handoff.
+
+Image: ghcr.io/eliware/web-template
+Pull command: docker pull ghcr.io/eliware/web-template:v12.0.0
+Supported tags: vMAJOR.MINOR.PATCH
+Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.

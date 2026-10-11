@@ -1,6 +1,8 @@
 # [![eliware.org](https://eliware.org/logos/brand.png)](https://discord.gg/M6aTR9eTwN)
 
-@eliware/web-template [![License](https://img.shields.io/github/license/eliware/web-template)](https://github.com/eliware/web-template/blob/main/LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yaml)
+## @eliware/web-template [![License](https://img.shields.io/github/license/eliware/web-template)](https://github.com/eliware/web-template/blob/main/LICENSE) [![CI](https://github.com/eliware/web-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/eliware/web-template/actions/workflows/ci.yaml)
+
+A Node.js web application template with explicit assets, routes, build, and deployment boundaries.
 
 ## Table of Contents
 
@@ -20,14 +22,12 @@
 - [Build](#build)
 - [Deployment](#deployment)
 - [Support](#support)
-- [License](#license)
 - [Links](#links)
+- [License](#license)
 
 ## Features
 
 This template owns a reusable web application baseline; each derived application owns its interface, routes, runtime behavior, and deployment decisions.
-
-Package description: A Node.js web application template with explicit assets, routes, build, and deployment boundaries. Author: Eliware <eliware@eliware.org>. License: MIT.
 
 Purpose: provide a reusable Node.js web application baseline for Eliware projects.
 
@@ -35,7 +35,7 @@ The starter serves a simple page and compiled browser entrypoint. Replace the te
 
 ## Requirements
 
-Use Node.js 26 and npm. Docker is required to build and run the container image. CI currently tests Ubuntu; Windows and macOS are intended but unverified.
+Use Node.js 26 or later and npm. Docker is required to build and run the container image. CI currently tests Ubuntu; Windows and macOS are intended but unverified.
 
 ## Setup
 
@@ -50,6 +50,8 @@ Pull command: docker pull ghcr.io/eliware/web-template:v11.0.0
 Supported tags: vMAJOR.MINOR.PATCH
 Deployment boundary: publication does not deploy; deploy by immutable version tag and recorded sha256 digest.
 
+Read [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
+
 ## Development
 
 Read [AGENTS.md](AGENTS.md), this README, [specs/README.md](specs/README.md), and [RELEASE_NOTES.md](RELEASE_NOTES.md) before changing the template. `src/main.mjs` owns application startup, `src/http.mjs` owns HTTP routing, `src/client.mjs` owns page updates, and `src/client-entry.mjs` bootstraps the browser code; each source module has one mirrored test.
@@ -62,7 +64,7 @@ Run `npm test` for Jest with 100% statement, branch, function, and line coverage
 
 ## Troubleshooting
 
-If the server does not start, check that Node.js 26 is installed, dependencies are installed with `npm ci`, and `PORT` is an integer from 1 through 65535. If the browser client is missing, run `npm run build`. Run `npm test` to validate the checkout.
+If the server does not start, check that Node.js 26 or later is installed, dependencies are installed with `npm ci`, and `PORT` is an integer from 1 through 65535. If the browser client is missing, run `npm run build`. Run `npm test` to validate the checkout.
 
 ## Security
 
@@ -103,23 +105,20 @@ The repository owns the application, Dockerfile, and publication configuration. 
 
 ## Support
 
-For help or discussion, join the Eliware community:
+For help, questions, or to chat with the author and community, visit:
 
-[![Discord](https://eliware.org/logos/discord_96.png)](https://discord.gg/M6aTR9eTwN)
+[![Discord](https://eliware.org/logos/discord_96.png)](https://discord.gg/M6aTR9eTwN)[![eliware.org](https://eliware.org/logos/eliware_96.png)](https://discord.gg/M6aTR9eTwN)
 
 **[eliware.org on Discord](https://discord.gg/M6aTR9eTwN)**
 
-## License
-
-[license](LICENSE)
-
 ## Links
 
-- [docs](docs/README.md)
-- [Home Page](https://github.com/eliware/web-template#readme)
-- [GitHub repository](https://github.com/eliware/web-template.git)
-- [Eliware](https://eliware.org)
-- [GitHub organization](https://github.com/eliware)
+- [Home Page](https://eliware.org)
+- [GitHub Org](https://github.com/eliware)
+- [GitHub Repo](https://github.com/eliware/web-template)
+- [Bug Reports](https://github.com/eliware/web-template/issues)
 - [Discord](https://discord.gg/M6aTR9eTwN)
-- [specifications](specs/README.md)
-- [Release Notes](RELEASE_NOTES.md)
+
+## License
+
+[MIT © Eliware](LICENSE)
