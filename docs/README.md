@@ -29,7 +29,11 @@ These browser checks run outside `npm test` and CI. Stop the server after the ch
 
 ## Container and deployment
 
-Build the image with `docker build -t web-template .`. The image is `ghcr.io/eliware/web-template`.
+Build a local image with `docker build -t web-template .`.
+
+> **Template setup — update these values after you create a web application repository.**
+>
+> This template has no published image. Set the image visibility, pull access, and supported architectures. The workflow builds `linux/amd64`. Name the owner for build inputs and architecture decisions. Update the README and publication workflow before you publish an image.
 
 Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the site.
 

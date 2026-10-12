@@ -69,8 +69,13 @@ Set `LOG_LEVEL` to `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `sill
 ## Operations
 
 Run `npm run build`, then run `node bin/web-template.mjs`. The server listens on port `3000` by default.
-Build the image with `docker build -t web-template .`. Deploy a released version tag with its recorded SHA-256 digest.
-Image publication does not deploy the site.
+Build a local image with `docker build -t web-template .`.
+
+> **Template setup — update these values after you create a web application repository.**
+>
+> This template has no published image. Set the image visibility to public or private. Set who can pull it. The workflow builds `linux/amd64`; confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before you publish an image.
+
+Deploy with an approved version tag and its recorded SHA-256 digest. Image publication does not deploy the site.
 
 ## Routes
 
