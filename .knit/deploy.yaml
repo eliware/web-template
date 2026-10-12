@@ -3,7 +3,7 @@ on:
   push:
     deployments:
       - target: dev
-        cwd: /opt/web-template
+        cwd: /eliware/web-template
         timeoutMs: 300000
         commands:
           - git pull --ff-only origin main
