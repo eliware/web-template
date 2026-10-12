@@ -23,6 +23,7 @@ Keep source assets in `public/`. Keep generated files in `dist/`. Do not put sec
 ## Check the browser
 
 Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run lighthouse`. The report goes to the ignored `artifacts/` directory.
+Pass when the report gives Accessibility a score of at least 95 out of 100. If the score is lower, fix the reported issues and run Lighthouse again.
 
 These browser checks run outside `npm test` and CI. Stop the server after the checks.
 
