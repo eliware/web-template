@@ -33,7 +33,7 @@
     "puppeteer": "^25.12.0"
   },
   "devDependencies": {
-    "@eliware/test": "^11.0.0",
+    "@eliware/test": "^12.0.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^7.2.3"
   },
