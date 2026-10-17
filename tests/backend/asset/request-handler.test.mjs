@@ -1,5 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
-import { createAssetRequestHandler } from "../../src/backend/asset-request-handler.mjs";
+import { createAssetRequestHandler } from "../../../src/backend/asset/request-handler.mjs";
 
 function createReply() {
   return {

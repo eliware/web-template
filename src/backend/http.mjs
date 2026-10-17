@@ -1,4 +1,4 @@
-import { createAssetRequestHandler } from "./asset-request-handler.mjs";
+import { createAssetRequestHandler } from "./asset/request-handler.mjs";
 
 export function registerWebRoutes(server, options) {
   const handleAssetRequest = createAssetRequestHandler(options);

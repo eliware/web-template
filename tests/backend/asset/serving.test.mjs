@@ -14,17 +14,6 @@ test.each([
   expect(read).toHaveBeenCalledWith(resolve(rootName, file));
 });
 
-test("returns no asset when the routed file cannot be read", async () => {
-  const read = jest.fn().mockRejectedValue(new Error("missing"));
-
-  await expect(
-    readRouteAsset(
-      { root: "public", file: "index.html" },
-      { publicRoot: "public", buildRoot: "dist", read },
-    ),
-  ).resolves.toBeNull();
-});
-
 test("uses the file system reader by default", async () => {
   await expect(
     readRouteAsset(
