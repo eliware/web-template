@@ -1,4 +1,4 @@
-import { expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import { renderHome } from "../src/client.mjs";
 
 test("updates the page status when its element exists", () => {
@@ -8,6 +8,10 @@ test("updates the page status when its element exists", () => {
 });
 
 test("does nothing when the page has no status element", () => {
-  renderHome({ querySelector: () => null });
-  expect(true).toBe(true);
+  const querySelector = jest.fn(() => null);
+
+  renderHome({ querySelector });
+
+  expect(querySelector).toHaveBeenCalledTimes(1);
+  expect(querySelector).toHaveBeenCalledWith("[data-status]");
 });

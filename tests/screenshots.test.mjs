@@ -1,4 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
+import { resolve } from "node:path";
 
 const launch = jest.fn();
 jest.unstable_mockModule("puppeteer", () => ({ default: { launch } }));
@@ -20,10 +21,11 @@ test("captures a full page screenshot and closes the browser", async () => {
   expect(page.goto).toHaveBeenCalledWith("http://localhost:3000/", {
     waitUntil: "networkidle0",
   });
-  expect(makeDirectory).toHaveBeenCalledWith(expect.stringContaining("artifacts"), {
-    recursive: true,
+  expect(target).toBe(resolve("artifacts/home.png"));
+  expect(page.screenshot).toHaveBeenCalledWith({
+    path: resolve("artifacts/home.png"),
+    fullPage: true,
   });
-  expect(page.screenshot).toHaveBeenCalledWith({ path: target, fullPage: true });
   expect(browser.close).toHaveBeenCalledTimes(1);
 });
 

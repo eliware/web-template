@@ -1,11 +1,11 @@
 import { readFile } from "node:fs/promises";
 import { readAsset } from "./asset-reader.mjs";
+import { writeAssetResponse, writeTextResponse } from "./response-writers.mjs";
 
 export function createRequestHandler({ publicRoot, buildRoot, read = readFile }) {
   return async function handleRequest(request, response) {
     if (request.method !== "GET") {
-      response.writeHead(405, { "content-type": "text/plain" });
-      response.end("Method not allowed");
+      writeTextResponse(response, 405, "Method not allowed");
       return;
     }
 
@@ -17,20 +17,17 @@ export function createRequestHandler({ publicRoot, buildRoot, read = readFile })
           ? `${buildRoot}/client.js`
           : null;
     if (!file) {
-      response.writeHead(404, { "content-type": "text/plain" });
-      response.end("Not found");
+      writeTextResponse(response, 404, "Not found");
       return;
     }
 
     const content = await readAsset(file, read);
     if (content === null) {
-      response.writeHead(404, { "content-type": "text/plain" });
-      response.end("Not found");
+      writeTextResponse(response, 404, "Not found");
       return;
     }
 
     const type = path === "/" ? "text/html" : "text/javascript";
-    response.writeHead(200, { "content-type": type });
-    response.end(content);
+    writeAssetResponse(response, content, type);
   };
 }
