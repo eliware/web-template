@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { readAsset } from "./asset-reader.mjs";
 import { writeAssetResponse, writeTextResponse } from "./response-writers.mjs";
+import { resolveRoute } from "./route-resolver.mjs";
 
 export function createRequestHandler({ publicRoot, buildRoot, read = readFile }) {
   return async function handleRequest(request, response) {
@@ -10,24 +11,18 @@ export function createRequestHandler({ publicRoot, buildRoot, read = readFile })
     }
 
     const path = new URL(request.url, "http://localhost").pathname;
-    const file =
-      path === "/"
-        ? `${publicRoot}/index.html`
-        : path === "/client.js"
-          ? `${buildRoot}/client.js`
-          : null;
-    if (!file) {
+    const route = resolveRoute(path, { publicRoot, buildRoot });
+    if (!route) {
       writeTextResponse(response, 404, "Not found");
       return;
     }
 
-    const content = await readAsset(file, read);
+    const content = await readAsset(route.file, read);
     if (content === null) {
       writeTextResponse(response, 404, "Not found");
       return;
     }
 
-    const type = path === "/" ? "text/html" : "text/javascript";
-    writeAssetResponse(response, content, type);
+    writeAssetResponse(response, content, route.contentType);
   };
 }

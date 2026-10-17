@@ -1,9 +1,12 @@
-import { expect, test } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 
-test("bootstraps the browser client against the page document", async () => {
-  const status = {};
-  globalThis.document = { querySelector: () => status };
-  await import("../src/client-entry.mjs");
-  expect(status.textContent).toBe("Web template client assets loaded.");
-  delete globalThis.document;
+const documentMock = {};
+const renderHome = jest.fn();
+globalThis.document = documentMock;
+jest.unstable_mockModule("../src/client.mjs", () => ({ renderHome }));
+await import("../src/client-entry.mjs");
+delete globalThis.document;
+
+test("passes the page document to the browser client", () => {
+  expect(renderHome).toHaveBeenCalledWith(documentMock);
 });
