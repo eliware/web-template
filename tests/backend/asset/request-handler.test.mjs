@@ -1,4 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
+import { resolve } from "node:path";
 import { createAssetRequestHandler } from "../../../src/backend/asset/request-handler.mjs";
 
 function createReply() {
@@ -9,16 +10,18 @@ function createReply() {
   };
 }
 
-test("uses the default reader when a routed asset is unavailable", async () => {
+test("resolves an asset request path without its query string", async () => {
+  const read = jest.fn().mockResolvedValue("client asset");
   const handle = createAssetRequestHandler({
-    publicRoot: "missing-handler-root",
-    buildRoot: "missing-handler-build",
+    publicRoot: "public",
+    buildRoot: "dist",
+    read,
   });
   const reply = createReply();
 
-  await handle({ method: "GET", url: "/" }, reply);
+  await handle({ method: "GET", url: "/client.js?cache=1" }, reply);
 
-  expect(reply.code).toHaveBeenCalledWith(404);
-  expect(reply.type).toHaveBeenCalledWith("text/plain");
-  expect(reply.send).toHaveBeenCalledWith("Not found");
+  expect(read).toHaveBeenCalledWith(resolve("dist", "client.js"));
+  expect(reply.type).toHaveBeenCalledWith("text/javascript");
+  expect(reply.send).toHaveBeenCalledWith("client asset");
 });

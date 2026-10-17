@@ -27,7 +27,7 @@ test("serves the public page and built client asset", async () => {
   const read = jest.fn().mockResolvedValue("asset");
   const app = createServer({ read });
 
-  const page = await app.inject({ method: "GET", url: "/?source=test" });
+  const page = await app.inject({ method: "GET", url: "/" });
   expect(read).toHaveBeenCalledWith(resolve("public", "index.html"));
   expect(page.statusCode).toBe(200);
   expect(page.headers["content-type"]).toContain("text/html");

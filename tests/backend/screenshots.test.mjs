@@ -43,7 +43,6 @@ test.each([
   expect(resolveScreenshotConfig).toHaveBeenCalledWith({
     url: input.url,
     output: input.output,
-    environment: process.env,
   });
   expect(capturePageScreenshot).toHaveBeenCalledWith({
     url: options.url,

@@ -22,3 +22,22 @@ test("uses explicit values before environment defaults", () => {
     }),
   ).toEqual({ url: "http://localhost:5000/", output: "custom/page.png" });
 });
+
+test("uses process environment values by default", () => {
+  const originalUrl = process.env.WEB_URL;
+  const originalOutput = process.env.SCREENSHOT_PATH;
+  process.env.WEB_URL = "http://localhost:6000/";
+  process.env.SCREENSHOT_PATH = "runtime/page.png";
+
+  try {
+    expect(resolveScreenshotConfig({})).toEqual({
+      url: "http://localhost:6000/",
+      output: "runtime/page.png",
+    });
+  } finally {
+    if (originalUrl === undefined) delete process.env.WEB_URL;
+    else process.env.WEB_URL = originalUrl;
+    if (originalOutput === undefined) delete process.env.SCREENSHOT_PATH;
+    else process.env.SCREENSHOT_PATH = originalOutput;
+  }
+});
