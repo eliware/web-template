@@ -29,11 +29,11 @@ function dependencies() {
 test.each([
   [undefined, 3000],
   ["8080", 8080],
-])("starts on configured port %s", (configured, port) => {
+])("starts on configured TCP endpoint %s", (configured, tcpEndpoint) => {
   if (configured !== undefined) process.env.PORT = configured;
   const deps = dependencies();
   expect(startWebApplication(deps.values)).toBe(deps.server);
-  expect(deps.server.listen).toHaveBeenCalledWith(port);
+  expect(deps.server.listen).toHaveBeenCalledWith(tcpEndpoint);
   expect(deps.signals.shutdownHook).toBeInstanceOf(Function);
   deps.signals.shutdownHook();
   deps.signals.shutdownHook();
@@ -49,12 +49,12 @@ test("uses the configured log level", () => {
 });
 
 test.each(["NaN", "0", "65536", "1.5"])(
-  "rejects invalid port %s before creating a server",
-  (port) => {
-    process.env.PORT = port;
+  "rejects invalid TCP endpoint value %s before creating a server",
+  (tcpEndpoint) => {
+    process.env.PORT = tcpEndpoint;
     const deps = dependencies();
     expect(() => startWebApplication(deps.values)).toThrow(
-      "PORT must be an integer from 1 through 65535",
+      "Set the TCP endpoint value to an integer from 1 through 65535",
     );
     expect(deps.values.createServer).not.toHaveBeenCalled();
   },

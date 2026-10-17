@@ -16,9 +16,9 @@ export const runtimeDependencies = {
 
 export function startWebApplication(dependencies) {
   dependencies.loadEnvironment({ quiet: true });
-  const port = Number(process.env.PORT ?? 3000);
-  if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new Error("PORT must be an integer from 1 through 65535");
+  const tcpEndpoint = Number(process.env.PORT ?? 3000);
+  if (!Number.isInteger(tcpEndpoint) || tcpEndpoint < 1 || tcpEndpoint > 65535) {
+    throw new Error("Set the TCP endpoint value to an integer from 1 through 65535");
   }
 
   const log = dependencies.createLogger({ level: process.env.LOG_LEVEL ?? "info" });
@@ -36,7 +36,7 @@ export function startWebApplication(dependencies) {
     log.info("Web application stopped");
   };
   dependencies.registerSignals({ log, shutdownHook: shutdown });
-  server.listen(port);
-  log.info(`Web application listening on port ${port}`);
+  server.listen(tcpEndpoint);
+  log.info(`Web application accepts connections on TCP endpoint ${tcpEndpoint}`);
   return server;
 }

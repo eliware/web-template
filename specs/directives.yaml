@@ -1,9 +1,10 @@
-version: "12.0"
-description: Repository-specific guidance for the Eliware web template.
+version: "13.0"
+description: Guidance for the Eliware web application template.
 directives:
   - id: E-1020.0
     dos:
-      - Provide a reusable Node.js web application with a public asset root, documented routes, a tested browser build, mirrored tests, and a GHCR image baseline.
-      - Replace the template identity, page, routes, and package metadata when creating a derived web application.
+      - Provide a Node.js web application template with public assets and documented routes.
+      - Provide a tested browser build, focused tests, and a GHCR image baseline.
+      - Replace the template name, page, routes, and package metadata in a derived application.
     donts:
-      - Do not publish the template identity or placeholder page as a finished product.
+      - Do not publish the template name or placeholder page as a finished application.

@@ -27,7 +27,7 @@ A Node.js web application template with explicit assets, routes, build, and depl
 
 ## Features
 
-This template provides a reusable starting point. Each derived repository owns its product behavior and operating decisions.
+This template gives developers a starting point. Each derived repository owns its application behavior and operating decisions.
 
 ## Requirements
 
@@ -54,7 +54,7 @@ Run `npm test` before handoff. It runs the repository checks through `eliware-te
 ## Troubleshooting
 
 Install the required Node.js and npm versions. Run `npm ci` after dependency changes.
-Review the file and rule in any validation error.
+Read the file and rule in each validation error.
 
 ## Security
 
@@ -63,17 +63,19 @@ Use only approved secret stores for secret values.
 
 ## Configuration
 
-`PORT` defaults to `3000` and accepts integers from `1` through `65535`. `LOG_LEVEL` defaults to `info`.
+`PORT` sets the TCP endpoint number. It defaults to `3000` and accepts integers from `1` through `65535`. `LOG_LEVEL` defaults to `info`.
 Set `LOG_LEVEL` to `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
 
 ## Operations
 
-Run `npm run build`, then run `node bin/web-template.mjs`. The server listens on port `3000` by default.
+Run `npm run build`, then run `node bin/web-template.mjs`. The server accepts connections on TCP endpoint `3000` by default.
 Build a local image with `docker build -t web-template .`.
 
 > **Template setup — update these values after you create a web application repository.**
 >
-> This template has no published image. Set the image visibility to public or private. Set who can pull it. The workflow builds `linux/amd64`; confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the publication workflow before you publish an image.
+> This template has no published image. Set image visibility to public or private. Set who can pull it.
+>
+> The workflow builds `linux/amd64`. Confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the workflow before publication.
 
 Deploy with an approved version tag and its recorded SHA-256 digest. Image publication does not deploy the site.
 
@@ -83,7 +85,7 @@ Deploy with an approved version tag and its recorded SHA-256 digest. Image publi
 | ------------- | ------------ | --------------------------- |
 | `GET`         | `/`          | Serves `public/index.html`. |
 | `GET`         | `/client.js` | Serves `dist/client.js`.    |
-| Other methods | Any path     | Returns HTTP 405.           |
+| Other methods | All paths    | Returns HTTP 405.           |
 | `GET`         | Other paths  | Returns HTTP 404.           |
 
 ## Assets
@@ -94,7 +96,7 @@ Keep generated files out of `public/`. The image includes the page and browser b
 ## Development server
 
 Run `npm run build`, then run `node bin/web-template.mjs`.
-Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run lighthouse`. The report goes to ignored `artifacts/`.
+Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run screenshots` and `npm run lighthouse`. The files go to ignored `artifacts/`. Set `WEB_URL` or `SCREENSHOT_PATH` to change the screenshot target or file.
 
 ## Build
 

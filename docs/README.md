@@ -12,18 +12,18 @@ Run `npm run build` to create `dist/client.js`. The build bundles `src/client-en
 
 Set `PORT` to an integer from 1 through 65535. The default is `3000`. Set `LOG_LEVEL` only when needed. Its default is `info`.
 
-Run `node bin/web-template.mjs` to start the server. Open `http://localhost:3000/` or the configured port.
+Run `node bin/web-template.mjs` to start the server. Open `http://localhost:3000/` or the configured TCP endpoint.
 
 ## Routes and assets
 
-`GET /` serves `public/index.html`. `GET /client.js` serves the browser bundle. Other GET paths return 404. Other methods return 405.
+`GET /` serves `public/index.html`. `GET /client.js` serves the browser bundle. Other retrieval paths return 404. Other methods return 405.
 
 Keep source assets in `public/`. Keep generated files in `dist/`. Do not put secrets or generated files in `public/`.
 
 ## Check the browser
 
-Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run lighthouse`. The report goes to the ignored `artifacts/` directory.
-Pass when the report gives Accessibility a score of at least 95 out of 100. If the score is lower, fix the reported issues and run Lighthouse again.
+Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run screenshots` and `npm run lighthouse`. The files go to the ignored `artifacts/` directory. Set `WEB_URL` or `SCREENSHOT_PATH` to change the screenshot target or file.
+Pass when the report gives Accessibility a score of at least 95 out of 100. If the score is lower, repair the reported issues and run Lighthouse again.
 
 These browser checks run outside `npm test` and CI. Stop the server after the checks.
 
