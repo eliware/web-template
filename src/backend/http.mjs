@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-import { readAsset } from "./asset-reader.mjs";
+import { readRouteAsset } from "./asset/serving.mjs";
 import { resolveRoute } from "./route-resolver.mjs";
 
 export function registerWebRoutes(server, { publicRoot, buildRoot, read = readFile }) {
@@ -11,8 +10,7 @@ export function registerWebRoutes(server, { publicRoot, buildRoot, read = readFi
 
     const path = new URL(request.url, "http://localhost").pathname;
     const route = resolveRoute(path);
-    const root = route.root === "public" ? publicRoot : buildRoot;
-    const content = await readAsset(resolve(root, route.file), read);
+    const content = await readRouteAsset(route, { publicRoot, buildRoot, read });
     if (content === null) return reply.code(404).type("text/plain").send("Not found");
 
     return reply.type(route.contentType).send(content);

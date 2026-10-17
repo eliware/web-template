@@ -1,5 +1,5 @@
 import { expect, jest, test } from "@jest/globals";
-import { readAsset } from "../../src/backend/asset-reader.mjs";
+import { readAsset } from "../../../src/backend/asset/reader.mjs";
 
 test("returns asset content after a successful read", async () => {
   const read = jest.fn().mockResolvedValue("asset");
