@@ -1,15 +1,16 @@
 import { expect, test } from "@jest/globals";
 import { createLogger, registerHandlers, registerSignals } from "@eliware/common";
-import { registerApiExampleRoutes } from "../../src/backend/api-example/routes.mjs";
-import { registerWebRoutes } from "../../src/backend/http.mjs";
-import { runtimeDependencies } from "../../src/backend/runtime-wiring.mjs";
-import { createWebServer } from "../../src/backend/server.mjs";
-import { createShutdownHook } from "../../src/backend/shutdown.mjs";
-import { registerStatusRoutes } from "../../src/backend/status-routes.mjs";
+import { registerApiExampleRoutes } from "../../../src/backend/api-example/routes.mjs";
+import { registerWebRoutes } from "../../../src/backend/http.mjs";
+import { loadRuntimeConfig } from "../../../src/backend/runtime/config.mjs";
+import { runtimeDependencies } from "../../../src/backend/runtime/wiring.mjs";
+import { createWebServer } from "../../../src/backend/server.mjs";
+import { createShutdownHook } from "../../../src/backend/shutdown.mjs";
+import { registerStatusRoutes } from "../../../src/backend/status-routes.mjs";
 
 test("assembles the production application dependencies", () => {
   expect(runtimeDependencies).toEqual({
-    loadConfig: expect.any(Function),
+    loadConfig: loadRuntimeConfig,
     createLogger,
     registerHandlers,
     registerSignals,
