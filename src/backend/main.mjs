@@ -1,10 +1,6 @@
-import { parseTcpEndpoint } from "./port.mjs";
-
 export async function startWebApplication(dependencies) {
-  dependencies.loadEnvironment({ quiet: true });
-  const tcpEndpoint = parseTcpEndpoint(process.env.PORT);
-
-  const log = dependencies.createLogger({ level: process.env.LOG_LEVEL ?? "info" });
+  const { tcpEndpoint, logLevel } = dependencies.loadConfig();
+  const log = dependencies.createLogger({ level: logLevel });
   dependencies.registerHandlers({ log });
   const server = dependencies.createServer({
     logger: false,

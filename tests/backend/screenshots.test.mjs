@@ -1,43 +1,53 @@
-import { expect, jest, test } from "@jest/globals";
+import { beforeEach, expect, jest, test } from "@jest/globals";
 import { resolve } from "node:path";
 
-const launch = jest.fn();
-jest.unstable_mockModule("puppeteer", () => ({ default: { launch } }));
+const prepareScreenshotOutput = jest.fn();
+const capturePageScreenshot = jest.fn();
+jest.unstable_mockModule("../../src/backend/screenshot-output.mjs", () => ({
+  prepareScreenshotOutput,
+}));
+jest.unstable_mockModule("../../src/backend/browser-capture.mjs", () => ({
+  capturePageScreenshot,
+}));
 const { captureScreenshot } = await import("../../src/backend/screenshots.mjs");
 
-test("captures a full page screenshot and closes the browser", async () => {
-  const page = { goto: jest.fn(), screenshot: jest.fn() };
-  const browser = { newPage: jest.fn().mockResolvedValue(page), close: jest.fn() };
-  launch.mockResolvedValue(browser);
-  const makeDirectory = jest.fn();
-
-  const target = await captureScreenshot({
-    url: "http://localhost:3000/",
-    output: "artifacts/home.png",
-    makeDirectory,
-  });
-
-  expect(launch).toHaveBeenCalledWith({ headless: true });
-  expect(page.goto).toHaveBeenCalledWith("http://localhost:3000/", {
-    waitUntil: "networkidle0",
-  });
-  expect(target).toBe(resolve("artifacts/home.png"));
-  expect(page.screenshot).toHaveBeenCalledWith({
-    path: resolve("artifacts/home.png"),
-    fullPage: true,
-  });
-  expect(browser.close).toHaveBeenCalledTimes(1);
+beforeEach(() => {
+  prepareScreenshotOutput.mockReset();
+  capturePageScreenshot
+    .mockReset()
+    .mockImplementation(async ({ prepareTarget }) => prepareTarget());
 });
 
-test("closes the browser when page navigation fails", async () => {
-  const browser = {
-    newPage: jest
-      .fn()
-      .mockResolvedValue({ goto: jest.fn().mockRejectedValue(new Error("offline")) }),
-    close: jest.fn(),
-  };
-  launch.mockResolvedValue(browser);
+test("prepares output and coordinates screenshot capture", async () => {
+  prepareScreenshotOutput.mockResolvedValue(resolve("artifacts/home.png"));
+  const makeDirectory = jest.fn();
 
-  await expect(captureScreenshot({})).rejects.toThrow("offline");
-  expect(browser.close).toHaveBeenCalledTimes(1);
+  await expect(
+    captureScreenshot({
+      url: "http://localhost:3000/",
+      output: "artifacts/home.png",
+      makeDirectory,
+    }),
+  ).resolves.toBe(resolve("artifacts/home.png"));
+
+  expect(capturePageScreenshot).toHaveBeenCalledWith({
+    url: "http://localhost:3000/",
+    prepareTarget: expect.any(Function),
+  });
+  await expect(capturePageScreenshot.mock.calls[0][0].prepareTarget()).resolves.toBe(
+    resolve("artifacts/home.png"),
+  );
+  expect(prepareScreenshotOutput).toHaveBeenCalledWith("artifacts/home.png", makeDirectory);
+});
+
+test("uses the default screenshot URL and output path", async () => {
+  prepareScreenshotOutput.mockResolvedValue(resolve("artifacts/home.png"));
+
+  await captureScreenshot({});
+
+  expect(prepareScreenshotOutput).toHaveBeenCalledWith("artifacts/home.png", undefined);
+  expect(capturePageScreenshot).toHaveBeenCalledWith({
+    url: "http://127.0.0.1:3000/",
+    prepareTarget: expect.any(Function),
+  });
 });
