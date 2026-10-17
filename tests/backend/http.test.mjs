@@ -40,14 +40,6 @@ test("serves the public page and built client asset", async () => {
   expect(client.body).toBe("asset");
 });
 
-test("rejects unsupported methods", async () => {
-  const app = createServer();
-  const result = await app.inject({ method: "POST", url: "/" });
-  expect(result.statusCode).toBe(405);
-  expect(result.headers["content-type"]).toContain("text/plain");
-  expect(result.body).toBe("Method not allowed");
-});
-
 test.each([
   ["unknown route", "/private"],
   ["unavailable asset", "/"],

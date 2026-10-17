@@ -9,7 +9,10 @@ import { createShutdownHook } from "./shutdown.mjs";
 import { registerStatusRoutes } from "./status-routes.mjs";
 
 export const runtimeDependencies = {
-  loadConfig: () => loadApplicationConfig({ loadEnvironment, environment: process.env }),
+  loadConfig: () => {
+    loadEnvironment({ quiet: true });
+    return loadApplicationConfig({ environment: process.env });
+  },
   createLogger,
   registerHandlers,
   registerSignals,
