@@ -23,54 +23,34 @@ beforeEach(() => {
     .mockImplementation(async ({ prepareTarget }) => prepareTarget());
 });
 
-test("prepares output and coordinates screenshot capture", async () => {
-  resolveScreenshotConfig.mockReturnValue({
-    url: "http://localhost:3000/",
-    output: "artifacts/home.png",
-  });
-  prepareScreenshotOutput.mockResolvedValue(resolve("artifacts/home.png"));
-  const makeDirectory = jest.fn();
-
-  await expect(
-    captureScreenshot({
+test.each([
+  [
+    "explicit options",
+    {
       url: "http://localhost:3000/",
       output: "artifacts/home.png",
-      makeDirectory,
-    }),
-  ).resolves.toBe(resolve("artifacts/home.png"));
+      makeDirectory: jest.fn(),
+    },
+    { url: "http://localhost:3000/", output: "artifacts/home.png" },
+  ],
+  ["default options", {}, { url: "http://127.0.0.1:3000/", output: "artifacts/home.png" }],
+])("coordinates capture with %s", async (_name, input, options) => {
+  resolveScreenshotConfig.mockReturnValue(options);
+  prepareScreenshotOutput.mockResolvedValue(resolve(options.output));
+
+  await expect(captureScreenshot(input)).resolves.toBe(resolve(options.output));
 
   expect(resolveScreenshotConfig).toHaveBeenCalledWith({
-    url: "http://localhost:3000/",
-    output: "artifacts/home.png",
+    url: input.url,
+    output: input.output,
     environment: process.env,
   });
   expect(capturePageScreenshot).toHaveBeenCalledWith({
-    url: "http://localhost:3000/",
+    url: options.url,
     prepareTarget: expect.any(Function),
   });
   await expect(capturePageScreenshot.mock.calls[0][0].prepareTarget()).resolves.toBe(
-    resolve("artifacts/home.png"),
+    resolve(options.output),
   );
-  expect(prepareScreenshotOutput).toHaveBeenCalledWith("artifacts/home.png", makeDirectory);
-});
-
-test("uses the default screenshot URL and output path", async () => {
-  resolveScreenshotConfig.mockReturnValue({
-    url: "http://127.0.0.1:3000/",
-    output: "artifacts/home.png",
-  });
-  prepareScreenshotOutput.mockResolvedValue(resolve("artifacts/home.png"));
-
-  await captureScreenshot({});
-
-  expect(resolveScreenshotConfig).toHaveBeenCalledWith({
-    url: undefined,
-    output: undefined,
-    environment: process.env,
-  });
-  expect(prepareScreenshotOutput).toHaveBeenCalledWith("artifacts/home.png", undefined);
-  expect(capturePageScreenshot).toHaveBeenCalledWith({
-    url: "http://127.0.0.1:3000/",
-    prepareTarget: expect.any(Function),
-  });
+  expect(prepareScreenshotOutput).toHaveBeenCalledWith(options.output, input.makeDirectory);
 });

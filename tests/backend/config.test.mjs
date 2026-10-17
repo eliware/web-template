@@ -1,18 +1,9 @@
 import { expect, test } from "@jest/globals";
 import { loadApplicationConfig } from "../../src/backend/config.mjs";
 
-test("maps environment values to the application configuration", () => {
-  const environment = { PORT: "8080", LOG_LEVEL: "debug" };
-
-  expect(loadApplicationConfig({ environment })).toEqual({
-    tcpEndpoint: 8080,
-    logLevel: "debug",
-  });
-});
-
-test("uses the default endpoint and log level", () => {
-  expect(loadApplicationConfig({ environment: {} })).toEqual({
-    tcpEndpoint: 3000,
-    logLevel: "info",
-  });
+test.each([
+  ["configured values", { PORT: "8080", LOG_LEVEL: "debug" }, 8080, "debug"],
+  ["default values", {}, 3000, "info"],
+])("maps %s to the application configuration", (_name, environment, tcpEndpoint, logLevel) => {
+  expect(loadApplicationConfig({ environment })).toEqual({ tcpEndpoint, logLevel });
 });

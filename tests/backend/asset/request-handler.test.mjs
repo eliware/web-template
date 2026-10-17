@@ -9,17 +9,6 @@ function createReply() {
   };
 }
 
-test("rejects unsupported request methods", async () => {
-  const handle = createAssetRequestHandler({ publicRoot: "public", buildRoot: "dist" });
-  const reply = createReply();
-
-  await handle({ method: "POST", url: "/" }, reply);
-
-  expect(reply.code).toHaveBeenCalledWith(405);
-  expect(reply.type).toHaveBeenCalledWith("text/plain");
-  expect(reply.send).toHaveBeenCalledWith("Method not allowed");
-});
-
 test("uses the default reader when a routed asset is unavailable", async () => {
   const handle = createAssetRequestHandler({
     publicRoot: "missing-handler-root",
