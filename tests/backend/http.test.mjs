@@ -48,15 +48,15 @@ test("rejects unsupported methods for registered asset routes", async () => {
   expect(result.body).toBe("Method not allowed");
 });
 
-test.each([
-  ["unknown route", "/private"],
-  ["unavailable asset", "/"],
-])("returns not found for an %s", async (_case, url) => {
-  const app = createServer({
-    read: () => Promise.reject(new Error("missing")),
-  });
-  const result = await app.inject({ method: "GET", url });
-  expect(result.statusCode).toBe(404);
-  expect(result.headers["content-type"]).toContain("text/plain");
-  expect(result.body).toBe("Not found");
+test("returns not found for an unknown route and an unavailable asset", async () => {
+  const read = jest.fn().mockRejectedValue(new Error("missing"));
+  const app = createServer({ read });
+
+  for (const url of ["/private", "/"]) {
+    const result = await app.inject({ method: "GET", url });
+    expect(result.statusCode).toBe(404);
+    expect(result.headers["content-type"]).toContain("text/plain");
+    expect(result.body).toBe("Not found");
+  }
+  expect(read).toHaveBeenCalledTimes(1);
 });

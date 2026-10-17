@@ -1,6 +1,10 @@
-export function sendAssetMethodResponse(method, reply) {
-  if (method === "GET") return null;
-  return reply.code(405).type("text/plain").send("Method not allowed");
+export function createAssetMethodHandler(handler) {
+  return function handleAssetMethod(request, reply) {
+    if (request.method !== "GET") {
+      return reply.code(405).type("text/plain").send("Method not allowed");
+    }
+    return handler(request, reply);
+  };
 }
 
 export function sendAssetResponse(reply, route, content) {

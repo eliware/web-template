@@ -2,10 +2,7 @@ export async function startWebApplication(dependencies) {
   const { tcpEndpoint, logLevel } = dependencies.loadConfig();
   const log = dependencies.createLogger({ level: logLevel });
   dependencies.registerHandlers({ log });
-  const server = dependencies.createServer({
-    logger: false,
-    ajv: { customOptions: { removeAdditional: false } },
-  });
+  const server = dependencies.createServer();
   dependencies.registerWebRoutes(server, {
     publicRoot: dependencies.resolve("public"),
     buildRoot: dependencies.resolve("dist"),

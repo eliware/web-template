@@ -1,13 +1,8 @@
 import { createAssetRequestHandler } from "./asset/request-handler.mjs";
-import { sendAssetMethodResponse } from "./asset/response.mjs";
+import { createAssetMethodHandler } from "./asset/response.mjs";
 
 export function registerWebRoutes(server, options) {
-  const handleAssetRequest = createAssetRequestHandler(options);
-  const handleAssetRoute = (request, reply) => {
-    const methodResponse = sendAssetMethodResponse(request.method, reply);
-    if (methodResponse) return methodResponse;
-    return handleAssetRequest(request, reply);
-  };
+  const handleAssetRoute = createAssetMethodHandler(createAssetRequestHandler(options));
 
   server.all("/", handleAssetRoute);
   server.all("/client.js", handleAssetRoute);

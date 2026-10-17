@@ -36,10 +36,8 @@ test.each([
   const deps = dependencies({ tcpEndpoint, logLevel: "info" });
   await expect(startWebApplication(deps.values)).resolves.toBe(deps.server);
   expect(deps.values.loadConfig).toHaveBeenCalledTimes(1);
-  expect(deps.values.createServer).toHaveBeenCalledWith({
-    logger: false,
-    ajv: { customOptions: { removeAdditional: false } },
-  });
+  expect(deps.values.createServer).toHaveBeenCalledTimes(1);
+  expect(deps.values.createServer.mock.calls[0]).toEqual([]);
   expect(deps.values.registerWebRoutes).toHaveBeenCalledWith(deps.server, {
     publicRoot: "/app/public",
     buildRoot: "/app/dist",
