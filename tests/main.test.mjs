@@ -47,15 +47,3 @@ test("uses the configured log level", () => {
   startWebApplication(deps.values);
   expect(deps.values.createLogger).toHaveBeenCalledWith({ level: "debug" });
 });
-
-test.each(["NaN", "0", "65536", "1.5"])(
-  "rejects invalid TCP endpoint value %s before creating a server",
-  (tcpEndpoint) => {
-    process.env.PORT = tcpEndpoint;
-    const deps = dependencies();
-    expect(() => startWebApplication(deps.values)).toThrow(
-      "Set the TCP endpoint value to an integer from 1 through 65535",
-    );
-    expect(deps.values.createServer).not.toHaveBeenCalled();
-  },
-);

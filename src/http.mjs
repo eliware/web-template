@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { readAsset } from "./asset-reader.mjs";
 
 export function createRequestHandler({ publicRoot, buildRoot, read = readFile }) {
   return async function handleRequest(request, response) {
@@ -21,14 +22,15 @@ export function createRequestHandler({ publicRoot, buildRoot, read = readFile })
       return;
     }
 
-    try {
-      const content = await read(file);
-      const type = path === "/" ? "text/html" : "text/javascript";
-      response.writeHead(200, { "content-type": type });
-      response.end(content);
-    } catch {
+    const content = await readAsset(file, read);
+    if (content === null) {
       response.writeHead(404, { "content-type": "text/plain" });
       response.end("Not found");
+      return;
     }
+
+    const type = path === "/" ? "text/html" : "text/javascript";
+    response.writeHead(200, { "content-type": type });
+    response.end(content);
   };
 }

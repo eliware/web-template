@@ -32,23 +32,19 @@ test("rejects unsupported methods", async () => {
   expect(result.end).toHaveBeenCalledWith("Method not allowed");
 });
 
-test("returns not found for unknown and unavailable assets", async () => {
+test.each([
+  ["unknown route", "/private"],
+  ["unavailable asset", "/"],
+])("returns not found for an %s", async (_case, url) => {
   const handle = createRequestHandler({
     publicRoot: "public",
     buildRoot: "dist",
     read: () => Promise.reject(new Error("missing")),
   });
-  const unknown = response();
-  await handle({ method: "GET", url: "/private" }, unknown);
-  expect(unknown.writeHead).toHaveBeenCalledWith(404, {
+  const result = response();
+  await handle({ method: "GET", url }, result);
+  expect(result.writeHead).toHaveBeenCalledWith(404, {
     "content-type": "text/plain",
   });
-  expect(unknown.end).toHaveBeenCalledWith("Not found");
-
-  const missing = response();
-  await handle({ method: "GET", url: "/" }, missing);
-  expect(missing.writeHead).toHaveBeenCalledWith(404, {
-    "content-type": "text/plain",
-  });
-  expect(missing.end).toHaveBeenCalledWith("Not found");
+  expect(result.end).toHaveBeenCalledWith("Not found");
 });

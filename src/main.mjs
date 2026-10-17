@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { createLogger, registerHandlers, registerSignals } from "@eliware/common";
 import { config } from "dotenv";
 import { createRequestHandler } from "./http.mjs";
+import { parseTcpEndpoint } from "./port.mjs";
 
 export const runtimeDependencies = {
   loadEnvironment: config,
@@ -16,10 +17,7 @@ export const runtimeDependencies = {
 
 export function startWebApplication(dependencies) {
   dependencies.loadEnvironment({ quiet: true });
-  const tcpEndpoint = Number(process.env.PORT ?? 3000);
-  if (!Number.isInteger(tcpEndpoint) || tcpEndpoint < 1 || tcpEndpoint > 65535) {
-    throw new Error("Set the TCP endpoint value to an integer from 1 through 65535");
-  }
+  const tcpEndpoint = parseTcpEndpoint(process.env.PORT);
 
   const log = dependencies.createLogger({ level: process.env.LOG_LEVEL ?? "info" });
   dependencies.registerHandlers({ log });
