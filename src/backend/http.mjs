@@ -20,8 +20,6 @@ export function registerWebRoutes(server, { publicRoot, buildRoot, read = readFi
 
   server.all("/", handleRoute);
   server.all("/client.js", handleRoute);
-  server.get("/health", async (_request, reply) => reply.send({ status: "ok" }));
-  server.get("/ready", async (_request, reply) => reply.send({ status: "ready" }));
   server.setNotFoundHandler((_request, reply) =>
     reply.code(404).type("text/plain").send("Not found"),
   );

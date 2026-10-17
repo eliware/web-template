@@ -49,16 +49,6 @@ test("rejects unsupported methods", async () => {
 });
 
 test.each([
-  ["/health", { status: "ok" }],
-  ["/ready", { status: "ready" }],
-])("returns a successful status from %s", async (url, expected) => {
-  const app = createServer();
-  const result = await app.inject({ method: "GET", url });
-  expect(result.statusCode).toBe(200);
-  expect(result.json()).toEqual(expected);
-});
-
-test.each([
   ["unknown route", "/private"],
   ["unavailable asset", "/"],
 ])("returns not found for an %s", async (_case, url) => {

@@ -5,6 +5,8 @@ import { config } from "dotenv";
 import { registerApiExampleRoutes } from "./api-example.mjs";
 import { registerWebRoutes } from "./http.mjs";
 import { parseTcpEndpoint } from "./port.mjs";
+import { createShutdownHook } from "./shutdown.mjs";
+import { registerStatusRoutes } from "./status-routes.mjs";
 
 export const runtimeDependencies = {
   loadEnvironment: config,
@@ -14,6 +16,8 @@ export const runtimeDependencies = {
   createServer: Fastify,
   registerWebRoutes,
   registerApiExampleRoutes,
+  createShutdownHook,
+  registerStatusRoutes,
   resolve,
 };
 
@@ -32,14 +36,9 @@ export async function startWebApplication(dependencies) {
     buildRoot: dependencies.resolve("dist"),
   });
   dependencies.registerApiExampleRoutes(server);
-  let stopped = false;
-  const shutdown = async () => {
-    if (stopped) return;
-    stopped = true;
-    await server.close();
-    log.info("Web application stopped");
-  };
-  dependencies.registerSignals({ log, shutdownHook: shutdown });
+  dependencies.registerStatusRoutes(server);
+  const shutdownHook = dependencies.createShutdownHook({ server, log });
+  dependencies.registerSignals({ log, shutdownHook });
   await server.listen({ port: tcpEndpoint, host: "0.0.0.0" });
   log.info(`Web application accepts connections on TCP endpoint ${tcpEndpoint}`);
   return server;

@@ -13,10 +13,12 @@ function dependencies() {
   };
   const log = { info: jest.fn() };
   const signals = {};
+  const shutdown = jest.fn();
   return {
     server,
     log,
     signals,
+    shutdown,
     values: {
       loadEnvironment: jest.fn(),
       createLogger: jest.fn(() => log),
@@ -25,6 +27,8 @@ function dependencies() {
       createServer: jest.fn(() => server),
       registerWebRoutes: jest.fn(),
       registerApiExampleRoutes: jest.fn(),
+      registerStatusRoutes: jest.fn(),
+      createShutdownHook: jest.fn(() => shutdown),
       resolve: jest.fn((path) => `/app/${path}`),
     },
   };
@@ -46,11 +50,14 @@ test.each([
     buildRoot: "/app/dist",
   });
   expect(deps.values.registerApiExampleRoutes).toHaveBeenCalledWith(deps.server);
+  expect(deps.values.registerStatusRoutes).toHaveBeenCalledWith(deps.server);
+  expect(deps.values.createShutdownHook).toHaveBeenCalledWith({
+    server: deps.server,
+    log: deps.log,
+  });
   expect(deps.server.listen).toHaveBeenCalledWith({ port: tcpEndpoint, host: "0.0.0.0" });
-  expect(deps.signals.shutdownHook).toBeInstanceOf(Function);
-  await deps.signals.shutdownHook();
-  await deps.signals.shutdownHook();
-  expect(deps.server.close).toHaveBeenCalledTimes(1);
+  expect(typeof deps.signals.shutdownHook).toBe("function");
+  expect(deps.signals.shutdownHook).toBe(deps.shutdown);
 });
 
 test("uses the configured log level", async () => {
