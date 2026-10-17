@@ -46,6 +46,8 @@ Follow this README and the [user guide](docs/README.md). Read [release notes](RE
 
 Read [AGENTS.md](AGENTS.md) and [the specifications index](specs/README.md) before you change files.
 Keep documents and records in the repository that owns them.
+Keep server modules in `src/backend/`. Keep browser modules in `src/frontend/`.
+Put modules used by both sides in `src/shared/`.
 
 ## Testing
 
@@ -81,12 +83,15 @@ Deploy with an approved version tag and its recorded SHA-256 digest. Image publi
 
 ## Routes
 
-| Method        | Path         | Result                      |
-| ------------- | ------------ | --------------------------- |
-| `GET`         | `/`          | Serves `public/index.html`. |
-| `GET`         | `/client.js` | Serves `dist/client.js`.    |
-| Other methods | All paths    | Returns HTTP 405.           |
-| `GET`         | Other paths  | Returns HTTP 404.           |
+| Method        | Path                       | Result                                            |
+| ------------- | -------------------------- | ------------------------------------------------- |
+| `GET`         | `/`                        | Serves `public/index.html`.                       |
+| `GET`         | `/client.js`               | Serves `dist/client.js`.                          |
+| `GET`         | `/health`                  | Returns `{"status":"ok"}`.                        |
+| `GET`         | `/ready`                   | Returns `{"status":"ready"}`.                     |
+| `POST`        | `/api/examples/:exampleId` | Validates an example request or returns HTTP 400. |
+| Other methods | `/` and `/client.js`       | Returns HTTP 405.                                 |
+| `GET`         | Other paths                | Returns HTTP 404.                                 |
 
 ## Assets
 
@@ -100,7 +105,7 @@ Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run s
 
 ## Build
 
-Run `npm run build` to bundle `src/client-entry.mjs` as `dist/client.js`.
+Run `npm run build` to bundle `src/frontend/client-entry.mjs` as `dist/client.js`.
 The aggregate `npm test` command runs the build. The build output is generated and does not belong in source control.
 
 ## Deployment

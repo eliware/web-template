@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import { captureScreenshot } from "../src/screenshots.mjs";
+import { captureScreenshot } from "../src/backend/screenshots.mjs";
 
 await captureScreenshot({});

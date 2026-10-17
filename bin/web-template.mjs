@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import { runtimeDependencies, startWebApplication } from "../src/main.mjs";
+import { runtimeDependencies, startWebApplication } from "../src/backend/main.mjs";
 
-startWebApplication(runtimeDependencies);
+await startWebApplication(runtimeDependencies);

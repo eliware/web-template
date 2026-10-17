@@ -1,8 +1,9 @@
-import { createServer } from "node:http";
+import Fastify from "fastify";
 import { resolve } from "node:path";
 import { createLogger, registerHandlers, registerSignals } from "@eliware/common";
 import { config } from "dotenv";
-import { createRequestHandler } from "./http.mjs";
+import { registerApiExampleRoutes } from "./api-example.mjs";
+import { registerWebRoutes } from "./http.mjs";
 import { parseTcpEndpoint } from "./port.mjs";
 
 export const runtimeDependencies = {
@@ -10,31 +11,36 @@ export const runtimeDependencies = {
   createLogger,
   registerHandlers,
   registerSignals,
-  createServer,
-  createRequestHandler,
+  createServer: Fastify,
+  registerWebRoutes,
+  registerApiExampleRoutes,
   resolve,
 };
 
-export function startWebApplication(dependencies) {
+export async function startWebApplication(dependencies) {
   dependencies.loadEnvironment({ quiet: true });
   const tcpEndpoint = parseTcpEndpoint(process.env.PORT);
 
   const log = dependencies.createLogger({ level: process.env.LOG_LEVEL ?? "info" });
   dependencies.registerHandlers({ log });
-  const handler = dependencies.createRequestHandler({
+  const server = dependencies.createServer({
+    logger: false,
+    ajv: { customOptions: { removeAdditional: false } },
+  });
+  dependencies.registerWebRoutes(server, {
     publicRoot: dependencies.resolve("public"),
     buildRoot: dependencies.resolve("dist"),
   });
-  const server = dependencies.createServer(handler);
+  dependencies.registerApiExampleRoutes(server);
   let stopped = false;
-  const shutdown = () => {
+  const shutdown = async () => {
     if (stopped) return;
     stopped = true;
-    server.close();
+    await server.close();
     log.info("Web application stopped");
   };
   dependencies.registerSignals({ log, shutdownHook: shutdown });
-  server.listen(tcpEndpoint);
+  await server.listen({ port: tcpEndpoint, host: "0.0.0.0" });
   log.info(`Web application accepts connections on TCP endpoint ${tcpEndpoint}`);
   return server;
 }

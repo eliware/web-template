@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 
 const makeDirectory = jest.fn();
 jest.unstable_mockModule("node:fs/promises", () => ({ mkdir: makeDirectory }));
-const { prepareScreenshotOutput } = await import("../src/screenshot-output.mjs");
+const { prepareScreenshotOutput } = await import("../../src/backend/screenshot-output.mjs");
 
 test("resolves screenshot output and creates its parent directory", async () => {
   const makeDirectory = jest.fn();

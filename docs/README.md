@@ -6,7 +6,7 @@ Use this guide to build and run a web application from this template.
 
 Install Node.js 26 or later and npm 12 or later. Run `npm ci` from the repository root.
 
-Run `npm run build` to create `dist/client.js`. The build bundles `src/client-entry.mjs`. The server serves the page from `public/` and the bundle from `dist/`.
+Run `npm run build` to create `dist/client.js`. The build entry loads `src/frontend/client-entry.mjs`. The server serves the page from `public/` and the bundle from `dist/`.
 
 ## Configure and start
 
@@ -16,7 +16,26 @@ Run `node bin/web-template.mjs` to start the server. Open `http://localhost:3000
 
 ## Routes and assets
 
-`GET /` serves `public/index.html`. `GET /client.js` serves the browser bundle. Other retrieval paths return 404. Other methods return 405.
+`GET /` serves `public/index.html`. `GET /client.js` serves the browser bundle.
+`GET /health` returns `{"status":"ok"}`. `GET /ready` returns `{"status":"ready"}`.
+Other retrieval paths return 404. Other methods on the page and asset routes return 405.
+
+## API schema example
+
+`POST /api/examples/:exampleId` validates path parameters, query fields, and a JSON request body.
+The route also declares a response schema. Fastify rejects invalid requests with HTTP 400.
+The validator rejects fields outside each schema.
+The example route does not save data. Replace it with an application route and its contract.
+
+Send this request to the running server:
+
+```sh
+curl -X POST 'http://localhost:3000/api/examples/example-123?source=template' \
+  -H 'content-type: application/json' \
+  -d '{"name":"Example item","description":"A sample API contract."}'
+```
+
+The response is `{"id":"example-123","name":"Example item","description":"A sample API contract.","source":"template"}`.
 
 Keep source assets in `public/`. Keep generated files in `dist/`. Do not put secrets or generated files in `public/`.
 

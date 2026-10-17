@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const launch = jest.fn();
 jest.unstable_mockModule("puppeteer", () => ({ default: { launch } }));
-const { captureScreenshot } = await import("../src/screenshots.mjs");
+const { captureScreenshot } = await import("../../src/backend/screenshots.mjs");
 
 test("captures a full page screenshot and closes the browser", async () => {
   const page = { goto: jest.fn(), screenshot: jest.fn() };
