@@ -9,6 +9,7 @@ export default {
   target: "web",
   entry: {
     client: "./src/frontend/client-entry.mjs",
+    "service-worker": "./src/frontend/service/worker-entry.mjs",
   },
   output: {
     path: resolve(repositoryRoot, "dist"),

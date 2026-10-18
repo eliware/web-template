@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: .
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "Promise.all(['/health', '/ready'].map(path => fetch('http://127.0.0.1:1020' + path).then(response => { if (!response.ok) process.exitCode = 1; }))).catch(() => { process.exitCode = 1; })"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    ports:
+      - "1020:1020"

@@ -27,7 +27,7 @@ A Node.js web application template with explicit assets, routes, build, and depl
 
 ## Features
 
-This template gives developers a starting point. Each derived repository owns its application behavior and operating decisions.
+This template gives developers a starting point with a Fastify server, browser assets, API schema example, and installable web app shell. Each derived repository owns its application behavior and operating decisions.
 
 ## Requirements
 
@@ -65,13 +65,15 @@ Use only approved secret stores for secret values.
 
 ## Configuration
 
-`PORT` sets the TCP endpoint number. It defaults to `3000` and accepts integers from `1` through `65535`. `LOG_LEVEL` defaults to `info`.
+`PORT` sets the TCP endpoint number. It defaults to `1020` and accepts integers from `1` through `65535`. `LOG_LEVEL` defaults to `info`.
 Set `LOG_LEVEL` to `error`, `warn`, `info`, `http`, `verbose`, `debug`, or `silly`.
 
 ## Operations
 
-Run `npm run build`, then run `node bin/web-template.mjs`. The server accepts connections on TCP endpoint `3000` by default.
+Run `npm run build`, then run `node bin/web-template.mjs`. The server accepts connections on TCP endpoint `1020` by default.
 Build a local image with `docker build -t web-template .`.
+Run `docker compose up --build -d` to publish TCP endpoint `1020` on host address `0.0.0.0`.
+Run `docker compose down` to stop the container.
 
 > **Template setup — update these values after you create a web application repository.**
 >
@@ -87,6 +89,11 @@ Deploy with an approved version tag and its recorded SHA-256 digest. Image publi
 | ------------- | -------------------------- | ------------------------------------------------- |
 | `GET`         | `/`                        | Serves `public/index.html`.                       |
 | `GET`         | `/client.js`               | Serves `dist/client.js`.                          |
+| `GET`         | `/styles.css`              | Serves the page styles.                           |
+| `GET`         | `/manifest.webmanifest`    | Serves app install metadata.                      |
+| `GET`         | `/service-worker.js`       | Serves the offline app shell worker.              |
+| `GET`         | `/icons/*`                 | Serves the template app icons.                    |
+| `GET`         | `/screenshots/*`           | Serves desktop and mobile app previews.           |
 | `GET`         | `/health`                  | Returns `{"status":"ok"}`.                        |
 | `GET`         | `/ready`                   | Returns `{"status":"ready"}`.                     |
 | `POST`        | `/api/examples/:exampleId` | Validates an example request or returns HTTP 400. |
@@ -95,7 +102,7 @@ Deploy with an approved version tag and its recorded SHA-256 digest. Image publi
 
 ## Assets
 
-Keep source assets in `public/`. The build creates `dist/client.js`.
+Keep source assets in `public/`. The build creates `dist/client.js`. The manifest, icons, preview images, and offline worker provide the installable app setup. Read the [web application guide](docs/README.md) before you replace those assets.
 Keep generated files out of `public/`. The image includes the page and browser bundle.
 
 ## Development server

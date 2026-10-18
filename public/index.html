@@ -3,12 +3,75 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Eliware Web Template</title>
+    <meta name="theme-color" content="#101b2d" />
+    <meta name="description" content="A practical starting point for your next web application." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/template.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/template-192.png" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Web Template | Start with a strong foundation</title>
   </head>
   <body>
-    <main>
-      <h1>Eliware Web Template</h1>
-      <p data-status>Loading browser assets.</p>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/">
+          <img src="/icons/template.svg" alt="" width="40" height="40" />
+          <span>WEB<span class="brand-light">/KIT</span></span>
+        </a>
+        <span class="status"><span class="status-dot"></span> Ready to build</span>
+      </header>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR NEXT PROJECT STARTS HERE</p>
+          <h1 id="hero-title">A strong foundation.<br /><span>Your ideas, next.</span></h1>
+          <p class="intro">
+            A clean, capable web app template with the essentials already in place. Make it yours
+            and get moving.
+          </p>
+          <a class="button" href="#starter-kit"
+            >Explore the starter kit <span aria-hidden="true">↘</span></a
+          >
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="core"><span>W</span><i></i></div>
+          <span class="spark spark-one">✳</span><span class="spark spark-two">✦</span>
+        </div>
+      </section>
+      <section class="starter" id="starter-kit" aria-labelledby="starter-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE STARTER KIT</p>
+            <h2 id="starter-title">Everything in its place.</h2>
+          </div>
+          <p>Focused tools. Clear boundaries.<br />Room for what comes next.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="card-icon">⌘</span>
+            <h3>Built to extend</h3>
+            <p>Fastify on the server, a bundled browser client, and a clear path to grow.</p>
+            <span class="card-index">01 / FOUNDATION</span>
+          </article>
+          <article class="card">
+            <span class="card-icon">◈</span>
+            <h3>Ready to install</h3>
+            <p>Manifest, custom app artwork, and an offline-ready service worker.</p>
+            <span class="card-index">02 / EXPERIENCE</span>
+          </article>
+          <article class="card">
+            <span class="card-icon">↗</span>
+            <h3>Made to ship</h3>
+            <p>Container support, health checks, and browser tools for a confident launch.</p>
+            <span class="card-index">03 / DELIVERY</span>
+          </article>
+        </div>
+      </section>
+      <footer>
+        <span>WEB/KIT <span class="footer-muted">— A STARTING POINT BY ELIWARE</span></span
+        ><span data-status>Loading browser assets.</span>
+      </footer>
     </main>
     <script type="module" src="/client.js"></script>
   </body>

@@ -1,7 +1,7 @@
 import { expect, jest, test } from "@jest/globals";
 import { startWebApplication } from "../../src/backend/main.mjs";
 
-function dependencies(configuration = { tcpEndpoint: 3000, logLevel: "info" }) {
+function dependencies(configuration = { tcpEndpoint: 1020, logLevel: "info" }) {
   const server = {
     listen: jest.fn().mockResolvedValue(undefined),
     close: jest.fn().mockResolvedValue(undefined),
@@ -30,7 +30,7 @@ function dependencies(configuration = { tcpEndpoint: 3000, logLevel: "info" }) {
 }
 
 test.each([
-  [undefined, 3000],
+  [undefined, 1020],
   ["8080", 8080],
 ])("starts on configured TCP endpoint %s", async (configured, tcpEndpoint) => {
   const deps = dependencies({ tcpEndpoint, logLevel: "info" });

@@ -27,13 +27,13 @@ test.each([
   [
     "explicit options",
     {
-      url: "http://localhost:3000/",
+      url: "http://localhost:1020/",
       output: "artifacts/home.png",
       makeDirectory: jest.fn(),
     },
-    { url: "http://localhost:3000/", output: "artifacts/home.png" },
+    { url: "http://localhost:1020/", output: "artifacts/home.png" },
   ],
-  ["default options", {}, { url: "http://127.0.0.1:3000/", output: "artifacts/home.png" }],
+  ["default options", {}, { url: "http://127.0.0.1:1020/", output: "artifacts/home.png" }],
 ])("coordinates capture with %s", async (_name, input, options) => {
   resolveScreenshotConfig.mockReturnValue(options);
   prepareScreenshotOutput.mockResolvedValue(resolve(options.output));

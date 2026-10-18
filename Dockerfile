@@ -3,6 +3,7 @@ FROM node:26-bookworm-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
+COPY webpack.config.mjs ./webpack.config.mjs
 COPY src ./src
 RUN npm run build
 
@@ -17,5 +18,5 @@ COPY --chown=node:node src ./src
 COPY --chown=node:node public ./public
 COPY --from=build --chown=node:node /app/dist ./dist
 USER node
-EXPOSE 3000
+EXPOSE 1020
 CMD ["node", "bin/web-template.mjs"]

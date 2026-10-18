@@ -8,7 +8,7 @@ test("resolves environment values and built-in defaults", () => {
     }),
   ).toEqual({ url: "http://localhost:4000/", output: "output/page.png" });
   expect(resolveScreenshotConfig({ environment: {} })).toEqual({
-    url: "http://127.0.0.1:3000/",
+    url: "http://127.0.0.1:1020/",
     output: "artifacts/home.png",
   });
 });

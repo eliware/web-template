@@ -13,11 +13,11 @@ test("captures a full page screenshot and closes the browser", async () => {
   launch.mockResolvedValue(browser);
 
   await expect(
-    capturePageScreenshot({ url: "http://localhost:3000/", prepareTarget }),
+    capturePageScreenshot({ url: "http://localhost:1020/", prepareTarget }),
   ).resolves.toBe("artifacts/home.png");
 
   expect(launch).toHaveBeenCalledWith({ headless: true });
-  expect(page.goto).toHaveBeenCalledWith("http://localhost:3000/", {
+  expect(page.goto).toHaveBeenCalledWith("http://localhost:1020/", {
     waitUntil: "networkidle0",
   });
   expect(prepareTarget).toHaveBeenCalledTimes(1);
@@ -36,7 +36,7 @@ test("closes the browser when page navigation fails", async () => {
   const prepareTarget = jest.fn();
 
   await expect(
-    capturePageScreenshot({ url: "http://localhost:3000/", prepareTarget }),
+    capturePageScreenshot({ url: "http://localhost:1020/", prepareTarget }),
   ).rejects.toThrow("offline");
   expect(prepareTarget).not.toHaveBeenCalled();
   expect(browser.close).toHaveBeenCalledTimes(1);

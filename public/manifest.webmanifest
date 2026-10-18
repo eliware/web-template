@@ -1,0 +1,39 @@
+{
+  "id": "/",
+  "name": "Web Template Starter",
+  "short_name": "Web Starter",
+  "description": "A practical starting point for your next web application.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101b2d",
+  "theme_color": "#101b2d",
+  "orientation": "any",
+  "icons": [
+    { "src": "/icons/template.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/template-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/template-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "/icons/template-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/web-template-desktop.png",
+      "sizes": "1440x1000",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Web Template desktop preview"
+    },
+    {
+      "src": "/screenshots/web-template-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Web Template mobile preview"
+    }
+  ]
+}
