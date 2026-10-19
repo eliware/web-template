@@ -49,7 +49,8 @@ test("rejects unsupported methods for registered asset routes", async () => {
 });
 
 test("returns not found for an unknown route and an unavailable asset", async () => {
-  const read = jest.fn().mockRejectedValue(new Error("missing"));
+  const error = Object.assign(new Error("missing"), { code: "ENOENT" });
+  const read = jest.fn().mockRejectedValue(error);
   const app = createServer({ read });
 
   for (const url of ["/private", "/"]) {
