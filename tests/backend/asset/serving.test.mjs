@@ -22,3 +22,24 @@ test("uses the file system reader by default", async () => {
     ),
   ).resolves.toBeNull();
 });
+
+test("rejects route files outside their configured asset root", async () => {
+  const read = jest.fn();
+
+  expect(() =>
+    readRouteAsset(
+      { root: "public", file: "../../private/secret.txt" },
+      { publicRoot: "public", buildRoot: "dist", read },
+    ),
+  ).toThrow("asset path must stay within its configured root");
+  expect(read).not.toHaveBeenCalled();
+});
+
+test.each([[{ root: "unknown", file: "asset.txt" }], [{ root: "public" }]])(
+  "rejects incomplete asset route metadata: %p",
+  (route) => {
+    expect(() =>
+      readRouteAsset(route, { publicRoot: "public", buildRoot: "dist", read: jest.fn() }),
+    ).toThrow("asset route must include a configured root and file");
+  },
+);
