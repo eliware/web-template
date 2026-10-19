@@ -1,8 +1,9 @@
 export function createApiExampleResponse(request) {
-  return {
+  const response = {
     id: request.params.exampleId,
     name: request.body.name,
-    description: request.body.description,
-    source: request.query.source,
   };
+  if (request.body.description !== undefined) response.description = request.body.description;
+  if (request.query.source !== undefined) response.source = request.query.source;
+  return response;
 }

@@ -13,4 +13,4 @@ services:
       retries: 3
       start_period: 20s
     ports:
-      - "1020:1020"
+      - "0.0.0.0:1020:1020"

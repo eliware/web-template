@@ -28,7 +28,11 @@ try {
 
   const manifestAssets = await page.evaluate(async (appManifest) => {
     if (!appManifest) return [];
-    const assets = [...appManifest.icons, ...appManifest.screenshots];
+    const icons = Array.isArray(appManifest.icons) ? appManifest.icons : [];
+    const screenshots = Array.isArray(appManifest.screenshots) ? appManifest.screenshots : [];
+    const assets = [...icons, ...screenshots].filter(
+      (asset) => asset && typeof asset.src === "string",
+    );
     return Promise.all(
       assets.map(async (asset) => {
         const response = await fetch(asset.src);

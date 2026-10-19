@@ -35,6 +35,18 @@ test("validates the request and returns the declared response shape", async () =
   });
 });
 
+test("omits optional response fields when the request omits them", async () => {
+  const app = createServer();
+  const result = await app.inject({
+    method: "POST",
+    url: "/api/examples/example-123",
+    payload: { name: "Example item" },
+  });
+
+  expect(result.statusCode).toBe(200);
+  expect(result.json()).toEqual({ id: "example-123", name: "Example item" });
+});
+
 test("rejects invalid body, path, and query fields", async () => {
   const app = createServer();
   const invalidRequests = [
