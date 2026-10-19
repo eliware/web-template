@@ -25,3 +25,19 @@ test("resolves an asset request path without its query string", async () => {
   expect(reply.type).toHaveBeenCalledWith("text/javascript");
   expect(reply.send).toHaveBeenCalledWith("client asset");
 });
+
+test("returns not found for an unknown asset path", async () => {
+  const read = jest.fn();
+  const handle = createAssetRequestHandler({
+    publicRoot: "public",
+    buildRoot: "dist",
+    read,
+  });
+  const reply = createReply();
+
+  await handle({ method: "GET", url: "/private" }, reply);
+
+  expect(read).not.toHaveBeenCalled();
+  expect(reply.code).toHaveBeenCalledWith(404);
+  expect(reply.send).toHaveBeenCalledWith("Not found");
+});

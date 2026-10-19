@@ -7,6 +7,7 @@ export function createAssetRequestHandler({ publicRoot, buildRoot, read = readFi
   return async function handleAssetRequest(request, reply) {
     const path = new URL(request.url, "http://localhost").pathname;
     const route = resolveRoute(path);
+    if (route === null) return sendAssetResponse(reply, route, null);
     const content = await readRouteAsset(route, { publicRoot, buildRoot, read });
     return sendAssetResponse(reply, route, content);
   };
