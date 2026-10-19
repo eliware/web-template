@@ -1,10 +1,22 @@
 export function createShutdownHook({ server, log }) {
   let stopped = false;
+  let shutdownPromise;
 
-  return async function shutdown() {
-    if (stopped) return;
-    stopped = true;
-    await server.close();
-    log.info("Web application stopped");
+  return function shutdown() {
+    if (stopped) return Promise.resolve();
+    if (shutdownPromise) return shutdownPromise;
+
+    shutdownPromise = Promise.resolve()
+      .then(() => server.close())
+      .catch((error) => {
+        shutdownPromise = undefined;
+        throw error;
+      })
+      .then(() => {
+        stopped = true;
+        log.info("Web application stopped");
+      });
+
+    return shutdownPromise;
   };
 }
