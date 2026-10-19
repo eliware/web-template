@@ -23,6 +23,15 @@ test("uses the file system reader by default", async () => {
   ).resolves.toBeNull();
 });
 
+test("returns no asset for a missing route", async () => {
+  const read = jest.fn();
+
+  await expect(
+    readRouteAsset(null, { publicRoot: "public", buildRoot: "dist", read }),
+  ).resolves.toBeNull();
+  expect(read).not.toHaveBeenCalled();
+});
+
 test("rejects route files outside their configured asset root", async () => {
   const read = jest.fn();
 

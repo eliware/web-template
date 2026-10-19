@@ -3,6 +3,8 @@ import { isAbsolute, relative, resolve, sep } from "node:path";
 import { readAsset } from "./reader.mjs";
 
 export function readRouteAsset(route, { publicRoot, buildRoot, read = readFile }) {
+  if (route === null) return Promise.resolve(null);
+
   const roots = { public: publicRoot, build: buildRoot };
   const root = roots[route?.root];
   if (typeof root !== "string" || typeof route.file !== "string")
