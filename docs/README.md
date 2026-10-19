@@ -2,6 +2,8 @@
 
 Use this guide to build and run a web application from this template.
 
+> After you create a repository from this template, replace this document with end-user documentation for your repository.
+
 ## Install and build
 
 Install Node.js 26 or later and npm 12 or later. Run `npm ci` from the repository root.
