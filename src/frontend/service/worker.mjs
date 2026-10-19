@@ -3,8 +3,12 @@ const appShell = ["/", "/client.js", "/styles.css", "/manifest.webmanifest", "/i
 
 export function installOfflineShell(scope) {
   scope.addEventListener("install", (event) => {
-    event.waitUntil(scope.caches.open(cacheName).then((cache) => cache.addAll(appShell)));
-    scope.skipWaiting();
+    event.waitUntil(
+      scope.caches
+        .open(cacheName)
+        .then((cache) => cache.addAll(appShell))
+        .then(() => scope.skipWaiting()),
+    );
   });
 
   scope.addEventListener("activate", (event) => {

@@ -46,6 +46,19 @@ test("installs and activates the cached app shell", async () => {
   expect(scope.clients.claim).toHaveBeenCalled();
 });
 
+test("does not activate when app shell caching fails", async () => {
+  const scope = createScope();
+  const error = new Error("cache failed");
+  scope.caches.open.mockResolvedValue({ addAll: jest.fn().mockRejectedValue(error) });
+  installOfflineShell(scope);
+  const installEvent = createEvent();
+  scope.listeners.get("install")(installEvent);
+
+  await expect(installEvent.waitUntil.mock.calls[0][0]).rejects.toBe(error);
+
+  expect(scope.skipWaiting).not.toHaveBeenCalled();
+});
+
 test.each([
   ["POST", "http://localhost/page"],
   ["GET", "https://example.com/page"],
