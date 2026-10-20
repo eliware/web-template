@@ -55,6 +55,10 @@ Run `npm test` before handoff. It runs the repository checks through `eliware-te
 
 ## Troubleshooting
 
+If the browser cannot load `/client.js`, run `npm run build` and confirm that `dist/client.js` exists.
+If the server cannot start, confirm that `PORT` is an integer from 1 through 65535 and that no process uses it.
+If the API returns HTTP 400, check the request example in the [web application guide](docs/README.md).
+
 ## Security
 
 Keep credentials, secrets, private data, and runtime state out of Git.
