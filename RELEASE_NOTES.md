@@ -1,30 +1,32 @@
 # Release Notes
 
-## 14.0.0 — 2026-10-20
+## 15.0.0 — 2026-10-24
 
 ### Added
 
-- Add full-page browser screenshots with configurable URLs and output files.
-- Add a Fastify API example with request and response schemas.
-- Add PWA metadata, custom template icons, offline page support, and desktop and mobile screenshots.
-- Add Docker Compose health checks for the health and readiness routes.
-- Add browser screenshot and Lighthouse audit scripts.
-- Organize server, browser, and shared code under `src/backend/`, `src/frontend/`, and `src/shared/`.
+- Add a Fastify API example with request, path, query, and response schemas.
+- Add `/health` and `/ready` status routes.
+- Add a web app manifest, custom template icons, offline page support, and desktop and mobile screenshots.
+- Add browser screenshot and Lighthouse audit commands for performance, best practices, SEO, accessibility, and PWA behavior.
+- Add a Docker Compose setup that publishes port 1020 and checks the health and readiness routes.
+- Add documentation for API schemas, routes, assets, browser checks, builds, and deployment.
 
 ### Changed
 
-- Set the package version to 14.0.0 and align the specification, documentation, and image guidance with v14 conventions.
-- Update `@eliware/common` and Puppeteer to their latest available versions.
-- Match the GHCR workflow byte for byte with the canonical workflow and update Knit deployment commands.
-- Document routes, configuration, image access, browser checks, and deployment steps.
-- Text responses use the default character set.
-- Set the default server port to 1020 and publish the same port through the container.
-- Resolve asset paths from configured roots and preserve file system errors.
+- Set the package and specification versions to 15.0.0 and 15.0.
+- Refresh Node.js dependencies: Eliware Common, Eliware Test, dotenv, Puppeteer, and webpack.
+- Organize server, browser, and shared code under `src/backend/`, `src/frontend/`, and `src/shared/`.
+- Build the browser bundle with webpack for `dist/`.
+- Set the default server port and container port to 1020.
+- Match the GHCR workflow with the canonical Eliware Test v15 workflow.
+- Align repository guidance and user documentation with Eliware Test v15 conventions.
+
+### Fixed
+
+- Keep asset reads inside configured roots and preserve file system errors.
 - Return 404 for unknown asset paths and 405 for unsupported methods.
-- Wait for the offline worker shell before activation and retry shutdown after close failures.
-- Split route handling, server setup, configuration, screenshots, and API contracts into focused modules.
-- Upgrade Fastify, Lighthouse, Puppeteer, webpack, and Eliware Test dependencies.
-- Add template replacement and troubleshooting guidance to the README and user guide.
+- Wait for the offline worker shell before activation.
+- Retry server shutdown after close failures.
 
 ## 12.0.0 — 2026-10-12
 
