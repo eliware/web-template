@@ -1,4 +1,5 @@
 const cacheName = "web-template-shell-v1";
+const cachePrefix = "web-template-shell-";
 const appShell = ["/", "/client.js", "/styles.css", "/manifest.webmanifest", "/icons/template.svg"];
 
 export function installOfflineShell(scope) {
@@ -17,7 +18,9 @@ export function installOfflineShell(scope) {
         .keys()
         .then((names) =>
           Promise.all(
-            names.filter((name) => name !== cacheName).map((name) => scope.caches.delete(name)),
+            names
+              .filter((name) => name.startsWith(cachePrefix) && name !== cacheName)
+              .map((name) => scope.caches.delete(name)),
           ),
         )
         .then(() => scope.clients.claim()),

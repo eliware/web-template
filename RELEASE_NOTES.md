@@ -25,6 +25,7 @@
 ### Fixed
 
 - Keep asset reads inside configured roots and preserve file system errors.
+- Delete only obsolete offline shell caches owned by this application.
 - Return 404 for unknown asset paths and 405 for unsupported methods.
 - Retry server shutdown after close failures.
 - Correct the documented scope of `npm test` and separate build validation.

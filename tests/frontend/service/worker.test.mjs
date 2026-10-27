@@ -3,6 +3,11 @@ import { installOfflineShell } from "../../../src/frontend/service/worker.mjs";
 
 function createScope() {
   const listeners = new Map();
+  const cacheNames = new Set([
+    "web-template-shell-v0",
+    "web-template-shell-v1",
+    "another-app-offline-cache",
+  ]);
   return {
     addEventListener: (name, callback) => listeners.set(name, callback),
     listeners,
@@ -11,8 +16,8 @@ function createScope() {
         addAll: jest.fn().mockResolvedValue(undefined),
         put: jest.fn(),
       }),
-      keys: jest.fn().mockResolvedValue(["old-cache", "web-template-shell-v1"]),
-      delete: jest.fn().mockResolvedValue(true),
+      keys: jest.fn().mockImplementation(async () => [...cacheNames]),
+      delete: jest.fn().mockImplementation(async (name) => cacheNames.delete(name)),
       match: jest.fn().mockResolvedValue(undefined),
     },
     clients: { claim: jest.fn() },
@@ -42,7 +47,11 @@ test("installs and activates the cached app shell", async () => {
   const activateEvent = createEvent();
   scope.listeners.get("activate")(activateEvent);
   await activateEvent.waitUntil.mock.calls[0][0];
-  expect(scope.caches.delete).toHaveBeenCalledWith("old-cache");
+  expect(scope.caches.delete).toHaveBeenCalledWith("web-template-shell-v0");
+  await expect(scope.caches.keys()).resolves.toEqual([
+    "web-template-shell-v1",
+    "another-app-offline-cache",
+  ]);
   expect(scope.clients.claim).toHaveBeenCalled();
 });
 
