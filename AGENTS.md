@@ -49,7 +49,7 @@ Keep route, asset, build, and deployment guidance aligned with maintained code a
 
 Image: ghcr.io/eliware/web-template
 
-Pull command: docker pull ghcr.io/eliware/web-template:v15.0.0
+Pull command: docker pull ghcr.io/eliware/web-template:v15.0.1
 
 Supported tags: vMAJOR.MINOR.PATCH
 

@@ -1,10 +1,7 @@
 import { loadApplicationConfig } from "../config.mjs";
 import { loadEnvironment as loadEnvironmentFile } from "../environment-loader.mjs";
 
-export function loadRuntimeConfig({
-  environment = process.env,
-  loadEnvironment = loadEnvironmentFile,
-} = {}) {
+export function loadRuntimeConfig({ environment, loadEnvironment = loadEnvironmentFile } = {}) {
   loadEnvironment();
-  return loadApplicationConfig({ environment });
+  return loadApplicationConfig({ environment: environment ?? process.env });
 }

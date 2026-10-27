@@ -80,10 +80,10 @@ Open `http://localhost:1020/` to view the app. Run `docker compose down` to stop
 
 > **Template setup — update these values after you create a web application repository.**
 >
-> This template has no published image. Set the image visibility, pull access, and supported architectures. The workflow builds `linux/amd64`. Name the owner for build inputs and architecture decisions. Update the README and publication workflow before you publish an image.
+> The GHCR workflow publishes version-tagged images. Set the image visibility, pull access, and supported architectures. The workflow builds `linux/amd64`. Name the owner for build inputs and architecture decisions.
 
 Use a released version tag and its recorded SHA-256 digest for deployment. Publication does not deploy the site.
 
 ## Validate
 
-Run `npm test` before handoff. It checks tests, lint, formatting, audit, and the web build.
+Run `npm test` before handoff. It checks tests, lint, formatting, and dependencies. Run `npm run build` to check the web build.

@@ -19,9 +19,9 @@ export function installOfflineShell(scope) {
           Promise.all(
             names.filter((name) => name !== cacheName).map((name) => scope.caches.delete(name)),
           ),
-        ),
+        )
+        .then(() => scope.clients.claim()),
     );
-    scope.clients.claim();
   });
 
   scope.addEventListener("fetch", (event) => {

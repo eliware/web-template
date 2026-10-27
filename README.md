@@ -78,9 +78,9 @@ Run `docker compose down` to stop the container.
 
 > **Template setup — update these values after you create a web application repository.**
 >
-> This template has no published image. Set image visibility to public or private. Set who can pull it.
+> The GHCR workflow publishes version-tagged images. Set the image visibility and pull access.
 >
-> The workflow builds `linux/amd64`. Confirm or change the supported architectures. Name the owner for build inputs and architecture decisions. Update this section and the workflow before publication.
+> The workflow builds `linux/amd64`. Confirm or change the supported architectures. Name the owner for build inputs and architecture decisions.
 
 Deploy with an approved version tag and its recorded SHA-256 digest. Image publication does not deploy the site.
 
@@ -114,7 +114,7 @@ Run `npm run puppeteer` to install Chrome. Start the server, then run `npm run s
 ## Build
 
 Run `npm run build` to bundle `src/frontend/client-entry.mjs` as `dist/client.js`.
-The aggregate `npm test` command runs the build. The build output is generated and does not belong in source control.
+The `npm test` command runs the repository checks. Run `npm run build` to create the generated output, which does not belong in source control.
 
 ## Deployment
 

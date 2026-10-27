@@ -1,6 +1,6 @@
 {
   "name": "@eliware/web-template",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "type": "module",
   "description": "A Node.js web application template with explicit assets, routes, build, and deployment boundaries.",
   "keywords": [
@@ -28,14 +28,14 @@
     "node": ">=26"
   },
   "dependencies": {
-    "@eliware/common": "^15.0.0",
+    "@eliware/common": "^15.0.1",
     "dotenv": "^18.0.9",
     "fastify": "^5.12.7",
     "lighthouse": "^13.5.0",
     "puppeteer": "^25.16.0"
   },
   "devDependencies": {
-    "@eliware/test": "^15.0.0",
+    "@eliware/test": "^15.0.1",
     "webpack": "^5.112.2",
     "webpack-cli": "^7.2.3"
   },
